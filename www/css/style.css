@@ -1,0 +1,8 @@
+/* Empty. Add your own CSS if you like */
+.item-content p.post-excerpt {
+	white-space: wrap;
+}
+
+.login-modal .close-button .icon::before {
+	font-size: 18px !important;
+}
