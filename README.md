@@ -8,3 +8,5 @@ A mobile app that uses the Ionic Framework, and integrates with WordPress throug
 2. Go to www/controllers.js and change $rootScope.url to your website
 3. Load index.html in Safari, or compile app with Phonegap
 
+**Props to [https://github.com/modemlooper]**
+
