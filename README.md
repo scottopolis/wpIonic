@@ -4,11 +4,12 @@ A mobile app that uses the Ionic Framework, and integrates with WordPress throug
 
 Features:
 
--Gets posts through WP-API
--Pull to refresh
--Infinite scroll
--App intro
--WordPress login (needs custom code on your site to do anything)
+- Gets posts through WP-API
+- Pull to refresh
+- Infinite scroll
+- App intro
+- WordPress login (needs custom code on your site to do anything)
+- More coming soon
 
 ## Demo
 
