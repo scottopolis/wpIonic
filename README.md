@@ -12,7 +12,7 @@ Features:
 
 ## Demo
 
-http://cl.ly/image/1Q0j1z392y0S
+https://github.com/scottopolis/wpIonic/blob/master/demo-video.gif
 
 ## How to setup
 
