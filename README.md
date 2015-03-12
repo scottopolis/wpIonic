@@ -2,6 +2,18 @@
 
 A mobile app that uses the Ionic Framework, and integrates with WordPress through the WP-API.
 
+Features:
+
+-Gets posts through WP-API
+-Pull to refresh
+-Infinite scroll
+-App intro
+-WordPress login (needs custom code on your site to do anything)
+
+## Demo
+
+http://cl.ly/image/1Q0j1z392y0S
+
 ## How to setup
 
 1. Install and activate the Reactor Core plugin on your WordPress website [https://wordpress.org/plugins/reactor-core/]
