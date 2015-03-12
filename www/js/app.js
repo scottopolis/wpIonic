@@ -31,6 +31,16 @@ angular.module('wpIonic', ['ionic', 'wpIonic.controllers', 'wpIonic.services', '
     controller: 'AppCtrl'
   })
 
+  .state('app.intro', {
+    url: "/intro",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/intro.html",
+        controller: 'IntroCtrl'
+      }
+    }
+  })
+
   // this is the first sub view, notice menuContent under 'views', which is loaded through menu.html
   .state('app.posts', {
     url: "/posts",
@@ -70,5 +80,5 @@ angular.module('wpIonic', ['ionic', 'wpIonic.controllers', 'wpIonic.services', '
       }
     });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/posts');
+  $urlRouterProvider.otherwise('/app/intro');
 });
