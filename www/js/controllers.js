@@ -79,7 +79,7 @@ angular.module('wpIonic.controllers', [])
 
 })
 
-.controller('PostCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope ) {
+.controller('PostCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $sce ) {
 
   $ionicLoading.show({
       noBackdrop: true
@@ -89,6 +89,8 @@ angular.module('wpIonic.controllers', [])
 
   DataLoader.get( singlePostApi ).success(function(data, status, headers, config) {
       $scope.post = data;
+      // Don't strip post html
+      $scope.content = $sce.trustAsHtml(data.content);
       $ionicLoading.hide();
     }).
     error(function(data, status, headers, config) {
