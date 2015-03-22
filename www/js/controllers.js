@@ -145,6 +145,7 @@ angular.module('wpIonic.controllers', [])
           }
         }).
         error(function(data, status, headers, config) {
+          $scope.moreItems = false;
           console.log('error');
         });
 
