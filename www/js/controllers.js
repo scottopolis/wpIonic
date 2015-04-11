@@ -199,4 +199,10 @@ angular.module('wpIonic.controllers', [])
     $scope.slideIndex = index;
   };
 
+})
+
+.controller('TabsCtrl', function($scope) {
+
+  // Tabs stuff here
+
 });

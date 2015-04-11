@@ -71,6 +71,16 @@ angular.module('wpIonic', ['ionic', 'wpIonic.controllers', 'wpIonic.services', '
     }
   })
 
+  .state('app.tabs', {
+    url: "/tabs",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/tabs.html",
+        controller: 'TabsCtrl'
+      }
+    }
+  })
+
   .state('app.settings', {
       url: "/settings",
       views: {
