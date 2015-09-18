@@ -19,9 +19,8 @@ https://github.com/scottopolis/wpIonic/blob/master/demo-video.gif
 
 Blog post here: http://scottbolinger.com/ionic-wordpress-app/
 
-1. Install and activate the Reactor Core plugin on your WordPress website [https://wordpress.org/plugins/reactor-core/]
+1. Install and activate the WP-API v2 plugin on your WordPress website [https://wordpress.org/plugins/rest-api/]
 2. Go to www/js/controllers.js and change $rootScope.url to your website
 3. Load index.html in Safari, or compile app with Phonegap
 
 **Props to [https://github.com/modemlooper]**
-

@@ -1,8 +1,12 @@
 <ion-view>
-	<ion-nav-title>
-	{{post.title}}
+	<ion-nav-title ng-bind-html="post.title.rendered">
 	</ion-nav-title>
   <ion-content class="padding">
-  	<div ng-bind-html="content"></div>
+  	<div class="card post padding">
+  		<div class="item post-title">
+  		<h2 ng-bind-html="post.title.rendered"></h2>
+  		</div>
+  		<div class="item item-body" ng-bind-html="content"></div>
+  	</div>
   </ion-content>
 </ion-view>

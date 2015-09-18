@@ -4,7 +4,7 @@
 // 'wpIonic' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'wpIonic.controllers' is found in controllers.js, wpIoinc.services is in services.js
-angular.module('wpIonic', ['ionic', 'wpIonic.controllers', 'wpIonic.services', 'ngCordova'])
+angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 'wpIonic.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {

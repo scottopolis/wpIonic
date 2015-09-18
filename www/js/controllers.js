@@ -2,80 +2,10 @@ angular.module('wpIonic.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce, DataLoader, $rootScope ) {
   
-  // Enter your site url here. You must have the Reactor Core plugin activated on this site
-  $rootScope.url = 'http://scottbolinger.com';
-  
+  // Enter your site url here. You must have the WP-API v2 installed on this site. Leave /wp-json/wp/v2/ at the end.
+  $rootScope.url = 'http://scottbolinger.com/wp-json/wp/v2/';
+
   $rootScope.callback = '_jsonp=JSON_CALLBACK';
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-    $scope.src = $sce.trustAsResourceUrl( $rootScope.url + '/?appp=login' );
-  });
-
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
-
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
-
-  // Perform the login action when the user submits the login form
-  $scope.logUserIn = function( username, password ) {
-
-      console.log('Logging in...');
-
-      $scope.spinner = true;
-      $scope.loginMessage = null;
-
-      targetFrame = window.frames['login-iframe'];
-      targetFrame.postMessage( {
-        message: 'login',
-        username: username,
-        password: password
-
-      }, '*');
-
-  }
-
-  window.addEventListener('message', function(event) {
-
-      if( event.data.loggedin === true ) {
-        $scope.spinner = false;
-        console.log(event.data);
-        $scope.loggedin();
-        $scope.closeLogin();
-        localStorage.setItem('reactorUser', JSON.stringify( event.data ) );
-    }
-
-    if( event.data.loggedin === false )  {
-      $scope.spinner = false;
-      console.log(event.data.message);
-      $scope.loginMessage = event.data.message;
-      $scope.$apply();
-    }
-
-  });
-
-  $scope.loggedin = function() {
-      $scope.isUserLoggedIn = true;
-  }
-
-  $scope.logUserOut = function() {
-    $scope.$broadcast('logout');
-  }
-
-  $scope.$on('logout', function(event, msg) {
-    console.log('doing logout');
-    localStorage.removeItem('reactorUser');
-    $scope.isUserLoggedIn = false;
-    $scope.closeLogin();
-  });
 
 })
 
@@ -85,32 +15,41 @@ angular.module('wpIonic.controllers', [])
       noBackdrop: true
     });
 
-  var singlePostApi = $rootScope.url + '/wp-json/posts/' + $stateParams.postId + '?' + $rootScope.callback;
+  var singlePostApi = $rootScope.url + 'posts/' + $stateParams.postId + '?_embed&' + $rootScope.callback;
 
-  DataLoader.get( singlePostApi ).success(function(data, status, headers, config) {
-      $scope.post = data;
+  DataLoader.get( singlePostApi ).then(function(response) {
+      $scope.post = response.data;
+      console.log(response.data);
       // Don't strip post html
-      $scope.content = $sce.trustAsHtml(data.content);
+      $scope.content = $sce.trustAsHtml(response.data.content.rendered);
       $ionicLoading.hide();
-    }).
-    error(function(data, status, headers, config) {
-      console.log('error');
+    }, function(response) {
+      console.log('error', response);
     });
 
 })
 
 .controller('PostsCtrl', function( $scope, $http, DataLoader, $timeout, $ionicSlideBoxDelegate, $rootScope ) {
 
-    var postsApi = $rootScope.url + '/wp-json/posts?' + $rootScope.callback;
+    var postsApi = $rootScope.url + 'posts?' + $rootScope.callback;
+
+    $scope.moreItems = false;
 
     $scope.loadPosts = function() {
 
-      DataLoader.all( postsApi ).success(function(data, status, headers, config) {
-        $scope.posts = data;
-        //console.dir( data );
-      }).
-      error(function(data, status, headers, config) {
-        console.log('error');
+      console.log('loadPosts');
+
+      // Get all of our posts
+      DataLoader.get( postsApi ).then(function(response) {
+
+        $scope.posts = response.data;
+
+        $scope.moreItems = true;
+
+        console.log(response.data);
+
+      }, function(response) {
+        console.log('error', response);
       });
 
     }
@@ -119,7 +58,6 @@ angular.module('wpIonic.controllers', [])
     $scope.loadPosts();
 
     paged = 2;
-    $scope.moreItems = true;
 
     // Load more (infinite scroll)
     $scope.loadMore = function() {
@@ -130,21 +68,20 @@ angular.module('wpIonic.controllers', [])
 
       var pg = paged++;
 
+      console.log('loadMore ' + pg );
+
       $timeout(function() {
 
-        var apiurl = $rootScope.url + '/wp-json/posts';
+        DataLoader.get( postsApi + '&page=' + pg ).then(function(response) {
 
-        DataLoader.all( apiurl + '?page=' + pg + '&' + $rootScope.callback ).success(function(data, status, headers, config) {
-
-          angular.forEach( data, function( value, key ) {
+          angular.forEach( response.data, function( value, key ) {
             $scope.posts.push(value);
           });
 
-          if( data.length <= 0 ) {
+          if( response.data.length <= 0 ) {
             $scope.moreItems = false;
           }
-        }).
-        error(function(data, status, headers, config) {
+        }, function(response) {
           $scope.moreItems = false;
           console.log('error');
         });
@@ -177,9 +114,11 @@ angular.module('wpIonic.controllers', [])
     
 })
 
-.controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, $ionicViewService) {
+.controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate, $ionicHistory) {
 
-  $ionicViewService.nextViewOptions({
+  // $ionicSlideBoxDelegate.update();
+
+  $ionicHistory.nextViewOptions({
     disableBack: true
   });
  

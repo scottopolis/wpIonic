@@ -6,13 +6,27 @@ angular.module('wpIonic.services', [])
 .factory('DataLoader', function( $http ) {
 
   return {
-    all: function(url) {
-      return $http.jsonp( url );
-    },
     get: function(url) {
       // Simple index lookup
       return $http.jsonp( url );
     }
   }
 
-});
+})
+
+.factory('$localstorage', ['$window', function($window) {
+  return {
+    set: function(key, value) {
+      $window.localStorage[key] = value;
+    },
+    get: function(key, defaultValue) {
+      return $window.localStorage[key] || defaultValue;
+    },
+    setObject: function(key, value) {
+      $window.localStorage[key] = JSON.stringify(value);
+    },
+    getObject: function(key) {
+      return JSON.parse($window.localStorage[key] || '{}');
+    }
+  }
+}]);
