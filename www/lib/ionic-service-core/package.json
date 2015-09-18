@@ -1,0 +1,23 @@
+{
+  "name": "ionic-service-core",
+  "version": "0.1.10",
+  "description": "Ionic Core Component",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driftyco/ionic-service-core.git"
+  },
+  "keywords": [
+    "Ionic",
+    "core"
+  ],
+  "author": "Ionic",
+  "contributors": [
+    "Eric Bobbitt <eric@drifty.com>",
+    "William Pelrine <rudy@drifty.com>"
+  ],
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/driftyco/ionic-service-core/issues"
+  },
+  "homepage": "https://github.com/driftyco/ionic-service-core#readme"
+}

@@ -1,0 +1,46 @@
+{
+  "name": "ionic",
+  "codename": "xenon-xerus",
+  "homepage": "https://github.com/driftyco/ionic",
+  "authors": [
+    "Max Lynch <max@drifty.com>",
+    "Adam Bradley <adam@drifty.com>",
+    "Ben Sperry <ben@drifty.com>"
+  ],
+  "description": "Advanced HTML5 hybrid mobile app development framework.",
+  "main": [
+    "css/ionic.css",
+    "fonts/*",
+    "js/ionic.js",
+    "js/ionic-angular.js"
+  ],
+  "keywords": [
+    "mobile",
+    "html5",
+    "ionic",
+    "cordova",
+    "phonegap",
+    "trigger",
+    "triggerio",
+    "angularjs",
+    "angular"
+  ],
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "angular": "1.4.3",
+    "angular-animate": "1.4.3",
+    "angular-sanitize": "1.4.3",
+    "angular-ui-router": "0.2.13"
+  },
+  "_release": "2621dab2c4",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "2621dab2c4014c2b8fe74aeae19a73990e1d38b1"
+  },
+  "_source": "git://github.com/driftyco/ionic-bower.git",
+  "_target": "master",
+  "_originalSource": "driftyco/ionic-bower",
+  "_direct": true
+}
