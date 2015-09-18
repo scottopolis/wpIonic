@@ -100,3 +100,7 @@
 	float: left;
 	margin-right: 15px;
 }
+.post img {
+  max-width: 100%;
+  height: auto;
+}

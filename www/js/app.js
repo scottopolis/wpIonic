@@ -4,7 +4,7 @@
 // 'wpIonic' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'wpIonic.controllers' is found in controllers.js, wpIoinc.services is in services.js
-angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 'wpIonic.services', 'ngCordova'])
+angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 'wpIonic.services', 'ngCordova', 'angular-cache'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,7 +20,18 @@ angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider, CacheFactoryProvider) {
+
+  angular.extend(CacheFactoryProvider.defaults, { 
+    'storageMode': 'localStorage',
+    'capacity': 100
+  })
+
+  // Native scrolling
+  if( ionic.Platform.isAndroid() ) {
+    $ionicConfigProvider.scrolling.jsScrolling(false);
+  }
+  
   $stateProvider
 
   // sets up our default state, all views are loaded through here
