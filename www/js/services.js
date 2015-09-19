@@ -14,6 +14,38 @@ angular.module('wpIonic.services', [])
 
 })
 
+.factory('Bookmark', function( CacheFactory ) {
+
+  if ( ! CacheFactory.get('bookmarkCache') ) {
+    CacheFactory.createCache('bookmarkCache');
+  }
+
+  var bookmarkCache = CacheFactory.get( 'bookmarkCache' );
+
+  return {
+    set: function(id) {
+      bookmarkCache.put( id, 'bookmarked' );
+    },
+    get: function(id) {
+      bookmarkCache.get( id );
+      console.log( id );
+    },
+    check: function(id) {
+      var keys = bookmarkCache.keys();
+      var index = keys.indexOf(id);
+      if(index >= 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    remove: function(id) {
+      bookmarkCache.remove(id);
+    }
+  }
+
+})
+
 .factory('$localstorage', ['$window', function($window) {
   return {
     set: function(key, value) {

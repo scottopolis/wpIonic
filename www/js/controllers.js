@@ -9,7 +9,7 @@ angular.module('wpIonic.controllers', [])
 
 })
 
-.controller('PostCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $sce, CacheFactory ) {
+.controller('PostCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $sce, CacheFactory, $log, Bookmark ) {
 
   if ( ! CacheFactory.get('postCache') ) {
     CacheFactory.createCache('postCache');
@@ -24,7 +24,6 @@ angular.module('wpIonic.controllers', [])
   if( !postCache.get( $scope.itemID ) ) {
 
     // cache doesn't exist, so go get post
-    console.log('cache doesnt exist, so go get post');
 
     $ionicLoading.show({
       noBackdrop: true
@@ -36,12 +35,14 @@ angular.module('wpIonic.controllers', [])
       // Don't strip post html
       $scope.content = $sce.trustAsHtml(response.data.content.rendered);
 
+      $scope.comments = $scope.post._embedded['replies'][0];
+
       // add post to our cache
       postCache.put( response.data.id, response.data );
 
       $ionicLoading.hide();
     }, function(response) {
-      console.log('error', response);
+      $log.error('error', response);
       $ionicLoading.hide();
     });
 
@@ -49,19 +50,31 @@ angular.module('wpIonic.controllers', [])
     // Item exists, use cached item
     $scope.post = postCache.get( $scope.itemID );
     $scope.content = $sce.trustAsHtml( $scope.post.content.rendered );
+    $scope.comments = $scope.post._embedded['replies'][0];
+  }
+
+  $scope.bookmarked = Bookmark.check( $scope.itemID );
+
+  $scope.bookmarkItem = function( id ) {
+    
+    if( $scope.bookmarked ) {
+      Bookmark.remove( id );
+      $scope.bookmarked = false;
+    } else {
+      Bookmark.set( id );
+      $scope.bookmarked = true;
+    }
   }
 
 })
 
-.controller('PostsCtrl', function( $scope, $http, DataLoader, $timeout, $ionicSlideBoxDelegate, $rootScope ) {
+.controller('PostsCtrl', function( $scope, $http, DataLoader, $timeout, $ionicSlideBoxDelegate, $rootScope, $log ) {
 
   var postsApi = $rootScope.url + 'posts?' + $rootScope.callback;
 
   $scope.moreItems = false;
 
   $scope.loadPosts = function() {
-
-    console.log('loadPosts');
 
     // Get all of our posts
     DataLoader.get( postsApi ).then(function(response) {
@@ -70,10 +83,10 @@ angular.module('wpIonic.controllers', [])
 
       $scope.moreItems = true;
 
-      //console.log(response.data);
+      //$log.log(response.data);
 
     }, function(response) {
-      console.log('error', response);
+      $log.error(response);
     });
 
   }
@@ -92,7 +105,7 @@ angular.module('wpIonic.controllers', [])
 
     var pg = paged++;
 
-    console.log('loadMore ' + pg );
+    $log.log('loadMore ' + pg );
 
     $timeout(function() {
 
@@ -107,7 +120,7 @@ angular.module('wpIonic.controllers', [])
         }
       }, function(response) {
         $scope.moreItems = false;
-        console.log('error');
+        $log.error(response);
       });
 
       $scope.$broadcast('scroll.infiniteScrollComplete');
@@ -124,7 +137,6 @@ angular.module('wpIonic.controllers', [])
   // Pull to refresh
   $scope.doRefresh = function() {
   
-    console.log('Refreshing!');
     $timeout( function() {
 
       $scope.loadPosts();
@@ -135,6 +147,33 @@ angular.module('wpIonic.controllers', [])
     }, 1000);
       
   };
+    
+})
+
+.controller('BookmarksCtrl', function( $scope, $http, DataLoader, $timeout, $rootScope, $log, Bookmark, CacheFactory ) {
+
+  $scope.$on('$ionicView.enter', function(e) {
+
+    if ( ! CacheFactory.get('postCache') ) {
+      CacheFactory.createCache('postCache');
+    }
+
+    var postCache = CacheFactory.get( 'postCache' );
+
+    if ( ! CacheFactory.get('bookmarkCache') ) {
+      CacheFactory.createCache('bookmarkCache');
+    }
+
+    var bookmarkCacheKeys = CacheFactory.get( 'bookmarkCache' ).keys();
+
+    $scope.posts = [];
+  
+    angular.forEach( bookmarkCacheKeys, function( value, key ) {
+      var newPost = postCache.get( value );
+      $scope.posts.push( newPost );
+    });
+
+  });
     
 })
 

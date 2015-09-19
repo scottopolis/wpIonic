@@ -14,6 +14,8 @@
     "gulp-util": "^2.2.14",
     "shelljs": "^0.3.0"
   },
-  "cordovaPlugins": [],
+  "cordovaPlugins": [
+    "cordova-plugin-crosswalk-webview@1.2.0"
+  ],
   "cordovaPlatforms": []
 }

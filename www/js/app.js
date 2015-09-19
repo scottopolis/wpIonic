@@ -31,7 +31,7 @@ angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 
   if( ionic.Platform.isAndroid() ) {
     $ionicConfigProvider.scrolling.jsScrolling(false);
   }
-  
+
   $stateProvider
 
   // sets up our default state, all views are loaded through here
@@ -59,6 +59,16 @@ angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 
       'menuContent': {
         templateUrl: "templates/posts.html",
         controller: 'PostsCtrl'
+      }
+    }
+  })
+
+  .state('app.bookmarks', {
+    url: "/bookmarks",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/bookmarks.html",
+        controller: 'BookmarksCtrl'
       }
     }
   })
