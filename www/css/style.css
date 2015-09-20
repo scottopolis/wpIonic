@@ -104,3 +104,6 @@
   max-width: 100%;
   height: auto;
 }
+.post .item-body p a {
+  text-decoration: underline;
+}

@@ -3,11 +3,12 @@
   {{::post.title.rendered}}
 	</ion-nav-title>
   <ion-content class="padding">
+  <ion-refresher on-refresh="doRefresh()"></ion-refresher>
   	<div class="card post">
   		<div class="item post-title">
   		<h2 ng-bind-html="post.title.rendered"></h2>
   		</div>
-  		<div class="item item-body" ng-bind-html="content"></div>
+  		<div class="item item-body" ng-bind-html="content | html_filters"></div>
     
 
       <div class="item tabs tabs-secondary tabs-icon-left">

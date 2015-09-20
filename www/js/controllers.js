@@ -9,7 +9,7 @@ angular.module('wpIonic.controllers', [])
 
 })
 
-.controller('PostCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $sce, CacheFactory, $log, Bookmark ) {
+.controller('PostCtrl', function($scope, $stateParams, DataLoader, $ionicLoading, $rootScope, $sce, CacheFactory, $log, Bookmark, $timeout ) {
 
   if ( ! CacheFactory.get('postCache') ) {
     CacheFactory.createCache('postCache');
@@ -21,9 +21,9 @@ angular.module('wpIonic.controllers', [])
 
   var singlePostApi = $rootScope.url + 'posts/' + $scope.itemID + '?_embed&' + $rootScope.callback;
 
-  if( !postCache.get( $scope.itemID ) ) {
+  $scope.loadPost = function() {
 
-    // cache doesn't exist, so go get post
+    // Fetch remote post
 
     $ionicLoading.show({
       noBackdrop: true
@@ -46,6 +46,13 @@ angular.module('wpIonic.controllers', [])
       $ionicLoading.hide();
     });
 
+  }
+
+  if( !postCache.get( $scope.itemID ) ) {
+
+    // Item is not in cache, go get it
+    $scope.loadPost();
+
   } else {
     // Item exists, use cached item
     $scope.post = postCache.get( $scope.itemID );
@@ -53,6 +60,7 @@ angular.module('wpIonic.controllers', [])
     $scope.comments = $scope.post._embedded['replies'][0];
   }
 
+  // Bookmarking
   $scope.bookmarked = Bookmark.check( $scope.itemID );
 
   $scope.bookmarkItem = function( id ) {
@@ -65,6 +73,20 @@ angular.module('wpIonic.controllers', [])
       $scope.bookmarked = true;
     }
   }
+
+  // Pull to refresh
+  $scope.doRefresh = function() {
+  
+    $timeout( function() {
+
+      $scope.loadPost();
+
+      //Stop the ion-refresher from spinning
+      $scope.$broadcast('scroll.refreshComplete');
+    
+    }, 1000);
+      
+  };
 
 })
 
