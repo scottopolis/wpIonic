@@ -24,7 +24,10 @@ angular.module('wpIonic', ['ionic','ionic.service.core', 'wpIonic.controllers', 
 
   angular.extend(CacheFactoryProvider.defaults, { 
     'storageMode': 'localStorage',
-    'capacity': 100
+    'capacity': 10,
+    'maxAge': 10800000,
+    'deleteOnExpire': 'aggressive',
+    'recycleFreq': 10000
   })
 
   // Native scrolling

@@ -3,12 +3,12 @@ angular.module('wpIonic.services', [])
 /**
  * A simple example service that returns some data.
  */
-.factory('DataLoader', function( $http ) {
+.factory('DataLoader', function( $http, $log ) {
 
   return {
     get: function(url) {
       // Simple index lookup
-      return $http.jsonp( url );
+      return $http.get( url );
     }
   }
 

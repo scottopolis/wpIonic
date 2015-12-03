@@ -1,11 +1,11 @@
 angular.module('wpIonic.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce, DataLoader, $rootScope ) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce, DataLoader, $rootScope, $log ) {
   
   // Enter your site url here. You must have the WP-API v2 installed on this site. Leave /wp-json/wp/v2/ at the end.
-  $rootScope.url = 'http://scottbolinger.com/wp-json/wp/v2/';
+  $rootScope.url = 'http://www.mysite.com/wp-json/wp/v2/';
 
-  $rootScope.callback = '_jsonp=JSON_CALLBACK';
+  // $rootScope.callback = '_jsonp=JSON_CALLBACK';
 
 })
 
@@ -19,7 +19,7 @@ angular.module('wpIonic.controllers', [])
 
   $scope.itemID = $stateParams.postId;
 
-  var singlePostApi = $rootScope.url + 'posts/' + $scope.itemID + '?_embed&' + $rootScope.callback;
+  var singlePostApi = $rootScope.url + 'posts/' + $scope.itemID;
 
   $scope.loadPost = function() {
 
@@ -30,12 +30,15 @@ angular.module('wpIonic.controllers', [])
     });
 
     DataLoader.get( singlePostApi ).then(function(response) {
+
       $scope.post = response.data;
+
+      $log.debug($scope.post);
 
       // Don't strip post html
       $scope.content = $sce.trustAsHtml(response.data.content.rendered);
 
-      $scope.comments = $scope.post._embedded['replies'][0];
+      // $scope.comments = $scope.post._embedded['replies'][0];
 
       // add post to our cache
       postCache.put( response.data.id, response.data );
@@ -57,7 +60,7 @@ angular.module('wpIonic.controllers', [])
     // Item exists, use cached item
     $scope.post = postCache.get( $scope.itemID );
     $scope.content = $sce.trustAsHtml( $scope.post.content.rendered );
-    $scope.comments = $scope.post._embedded['replies'][0];
+    // $scope.comments = $scope.post._embedded['replies'][0];
   }
 
   // Bookmarking
@@ -92,7 +95,7 @@ angular.module('wpIonic.controllers', [])
 
 .controller('PostsCtrl', function( $scope, $http, DataLoader, $timeout, $ionicSlideBoxDelegate, $rootScope, $log ) {
 
-  var postsApi = $rootScope.url + 'posts?' + $rootScope.callback;
+  var postsApi = $rootScope.url + 'posts';
 
   $scope.moreItems = false;
 
@@ -105,10 +108,10 @@ angular.module('wpIonic.controllers', [])
 
       $scope.moreItems = true;
 
-      //$log.log(response.data);
+      $log.log(postsApi, response.data);
 
     }, function(response) {
-      $log.error(response);
+      $log.log(postsApi, response.data);
     });
 
   }
@@ -131,7 +134,7 @@ angular.module('wpIonic.controllers', [])
 
     $timeout(function() {
 
-      DataLoader.get( postsApi + '&page=' + pg ).then(function(response) {
+      DataLoader.get( postsApi + '?page=' + pg ).then(function(response) {
 
         angular.forEach( response.data, function( value, key ) {
           $scope.posts.push(value);

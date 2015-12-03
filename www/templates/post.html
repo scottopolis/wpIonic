@@ -8,7 +8,7 @@
   		<div class="item post-title">
   		<h2 ng-bind-html="post.title.rendered"></h2>
   		</div>
-  		<div class="item item-body" ng-bind-html="content | html_filters"></div>
+  		<div class="item item-body" ng-if="content" ng-bind-html="content | html_filters"></div>
     
 
       <div class="item tabs tabs-secondary tabs-icon-left">
