@@ -2,8 +2,8 @@ angular.module('wpIonic.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout, $sce, DataLoader, $rootScope, $log ) {
   
-  // Enter your site url here. You must have the WP-API v2 installed on this site. Leave /wp-json/wp/v2/ at the end.
-  $rootScope.url = 'http://www.mysite.com/wp-json/wp/v2/';
+  // Enter your site url here. You must have the WP-API v2 installed on this site.
+  $rootScope.url = 'http://www.mysite.com/wp-json/';
 
   // $rootScope.callback = '_jsonp=JSON_CALLBACK';
 
@@ -41,7 +41,7 @@ angular.module('wpIonic.controllers', [])
       // $scope.comments = $scope.post._embedded['replies'][0];
 
       // add post to our cache
-      postCache.put( response.data.id, response.data );
+      postCache.put( response.data.ID, response.data );
 
       $ionicLoading.hide();
     }, function(response) {
