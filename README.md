@@ -13,7 +13,9 @@ Features:
 
 ## Demo
 
-https://github.com/scottopolis/wpIonic/blob/master/demo-video.gif
+<p align="center">
+ <img width="400" src="https://github.com/scottopolis/wpIonic/blob/master/demo-video.gif">
+</p>
 
 ## How to setup
 
