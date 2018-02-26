@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login Example</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h2>Members Only App</h2>
+  <p>
+    This project shows an example of validating an app user that is registered on your WordPress site. This allows you to use WordPress as a simple and free user management back-end for your app.
+  </p>
+  <p>
+    Please login to access the members only content below.
+  </p>
+  <button ion-button (click)="openLoginModal()"><span *ngIf="!loggedin">Login</span><span *ngIf="loggedin">Logout</span></button>
+  <p>&nbsp;</p>
+  <div *ngIf="loggedin">
+    <h2>MEMBERS ONLY CONTENT</h2>
+    <p>Here's your super special bonus...</p>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/XtdQz6piFpI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+</ion-content>

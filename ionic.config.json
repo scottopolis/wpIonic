@@ -1,0 +1,8 @@
+{
+  "name": "WPIonic",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

@@ -1,26 +1,26 @@
 # wpIonic
 
-A mobile app that uses the Ionic Framework, and integrates with WordPress through the WP-API.
+*Completely rewritten and updated for Ionic 3.9.2 Feb 2018*
+
+A demo mobile app that uses the Ionic Framework, and integrates with WordPress through the WP-API.
 
 Features:
 
 - Gets posts through WP-API
 - Pull to refresh
 - Infinite scroll
-- App intro
-- WordPress login (needs custom code on your site to do anything)
+- WordPress login (needs SB Login plugin)
 - More coming soon
 
 ## Demo
 
-https://github.com/scottopolis/wpIonic/blob/master/demo-video.gif
+https://github.com/scottopolis/wpIonic/blob/master/wpionic-demo.gif
 
 ## How to setup
 
 Blog post here: http://scottbolinger.com/ionic-wordpress-app/
 
-1. Install and activate the WP-API v2 plugin on your WordPress website [https://wordpress.org/plugins/rest-api/]
-2. Go to www/js/controllers.js and change $rootScope.url to your website
-3. Load index.html in Safari, or compile app with Phonegap
-
-**Props to [https://github.com/modemlooper]**
+- Install Ionic CLI tools https://ionicframework.com/docs/cli/
+- Clone this repository, and run npm install
+- Open pages/post-list/post-list.ts and providers/login/login.ts and change the urls
+- run ionic serve to see it in your browser
