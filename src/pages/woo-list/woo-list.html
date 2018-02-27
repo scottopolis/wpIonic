@@ -1,0 +1,50 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>WooCommerce</ion-title>
+  
+
+  	<ion-buttons end>
+		<button ion-button (click)="showCart()">
+			<ion-icon name="cart"></ion-icon>
+		</button>
+	</ion-buttons>
+
+	</ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-list class="post-list woocommerce">
+
+    <ion-item *ngFor="let item of items" (tap)="itemTapped($event, item)">
+
+    	<ion-thumbnail item-start *ngIf="item.images">
+	      <img src="{{item.images[0].src}}">
+	    </ion-thumbnail>
+
+		<h2 *ngIf="item.name" [innerHTML]="item.name"></h2>
+
+		<p *ngIf="item.price && !item.sale_price" class="product-price">${{item.price}}</p>
+
+    	<p *ngIf="item.sale_price" class="product-price">Sale! ${{item.sale_price}}</p>
+
+		<p *ngIf="item.description" [innerHTML]="item.description" class="product-description"></p>
+
+		<p *ngIf="item.average_rating != '0.00'" class="product-rating"><em>Rating: {{item.average_rating}} stars</em></p>
+
+    </ion-item>
+
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+   <ion-infinite-scroll-content></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
+
+</ion-content>

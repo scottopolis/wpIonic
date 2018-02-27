@@ -27,7 +27,9 @@ export class PostDetailPage {
 
   	this.selectedItem = this.navParams.get('item');
 
-    this.content = this.sanitizer.bypassSecurityTrustHtml( this.selectedItem.content.rendered );
+    if( this.selectedItem.content.rendered ) {
+      this.content = this.sanitizer.bypassSecurityTrustHtml( this.selectedItem.content.rendered );
+    }
 
   }
 

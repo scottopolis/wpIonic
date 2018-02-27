@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title><span [innerHTML]="selectedItem.name"></span></ion-title>
+
+    <ion-buttons end>
+		<button ion-button (click)="showCart()">
+			<ion-icon name="cart"></ion-icon>
+		</button>
+	</ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+ <div *ngIf="selectedItem" class="selection">
+
+ 	<ion-slides pager>
+
+	  <ion-slide *ngFor="let image of selectedItem.images">
+	    <img src="{{image.src}}" />
+	  </ion-slide>
+
+	</ion-slides>
+
+    <h2 [innerHTML]="selectedItem.name"></h2>
+
+    <p *ngIf="selectedItem.price && !selectedItem.sale_price" class="product-price">${{selectedItem.price}}</p>
+
+    <p *ngIf="selectedItem.sale_price" class="product-price">Sale! ${{selectedItem.sale_price}}</p>
+
+	<div *ngIf="description" [innerHTML]="description"></div>
+
+	<p *ngIf="selectedItem.average_rating != '0.00'" class="product-rating"><em>Rating: {{selectedItem.average_rating}} stars</em></p>
+
+	<button ion-button (click)="addToCart(selectedItem)">Add to Cart</button>
+
+    <p *ngIf="selectedItem.in_stock" class="product-stock">✓ In Stock.</p>
+
+ </div>
+</ion-content>

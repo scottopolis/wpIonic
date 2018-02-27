@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { LoginProvider } from '../providers/login/login';
 import { CameraProvider } from '../providers/camera/camera';
 import { PostsProvider } from '../providers/posts/posts';
+import { WooProvider } from '../providers/woo/woo';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PostsProvider } from '../providers/posts/posts';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     LoginProvider,
     CameraProvider,
-    PostsProvider
+    PostsProvider,
+    WooProvider
   ]
 })
 export class AppModule {}
