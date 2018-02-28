@@ -34,13 +34,9 @@
 
 	<p *ngIf="selectedItem.average_rating != '0.00'" class="product-rating"><em>Rating: {{selectedItem.average_rating}} stars</em></p>
 
-	<form (ngSubmit)="addToCart(addToCartForm)" #addToCartForm="ngForm">
+	<p *ngIf="selectedItem.in_stock" class="product-stock">✓ In Stock.</p>
 
-		<ion-item>
-			<ion-label stacked>Quantity</ion-label>
-			<ion-input type="number" ngModel name="quantity" [value]="1">
-			</ion-input>
-		</ion-item>
+	<form (ngSubmit)="addToCart(addToCartForm)" #addToCartForm="ngForm">
 
 		<!-- <ion-item *ngFor="let attr of selectedItem.attributes">
 			<ion-label stacked>{{attr.name}}</ion-label>
@@ -56,12 +52,16 @@
 			</ion-select>
 		</ion-item>
 
-		<div padding>
-			<button ion-button type="submit" block>Submit</button>
-		</div>
-	</form>
+		<ion-item>
+			<ion-label stacked>Quantity</ion-label>
+			<ion-input type="number" ngModel name="quantity" value="1" size="5">
+			</ion-input>
+		</ion-item>
 
-    <p *ngIf="selectedItem.in_stock" class="product-stock">✓ In Stock.</p>
+		<button ion-button type="submit" block>Add to Cart</button>
+
+
+	</form>
 
  </div>
 </ion-content>

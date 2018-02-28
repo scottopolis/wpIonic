@@ -22,7 +22,12 @@
 
 <ion-content padding>
 
-	<ion-list class="post-list woocommerce">
+  <div *ngIf="!items">
+    <p>Your cart is empty.</p>
+    <button ion-button (click)="dismiss()">Continue Shopping</button>
+  </div>
+
+	<ion-list class="post-list woocommerce" *ngIf="items">
 
     <ion-item *ngFor="let item of items">
 
@@ -30,14 +35,23 @@
 	      <img src="{{item.images[0].src}}">
 	    </ion-thumbnail>
 
-		<h2 *ngIf="item.name" [innerHTML]="item.name"></h2>
+  		<h2 *ngIf="item.name" [innerHTML]="item.name"></h2>
 
-		<p *ngIf="item.price && !item.sale_price" class="product-price">${{item.price}}</p>
+  		<ion-grid>
+        <ion-row>
+          <ion-col col-10><p *ngIf="item.price" class="product-price">${{item.price}}</p></ion-col>
+          <ion-col col-2><p *ngIf="item.quantity" class="product-price">{{item.quantity}}</p></ion-col>
+        </ion-row>
+      </ion-grid>
 
-    	<p *ngIf="item.sale_price" class="product-price">Sale! ${{item.sale_price}}</p>
+    </ion-item>
 
-		<p *ngIf="item.description" [innerHTML]="item.description" class="product-description"></p>
+    <ion-item>
+      Cart total: {{cart_total}}
+    </ion-item>
 
+    <ion-item>
+      <button ion-button icon-left color="light" (click)="clearCart()"><ion-icon name="trash"></ion-icon> Clear Cart</button>
     </ion-item>
 
   </ion-list>
@@ -45,22 +59,12 @@
 </ion-content>
 
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar *ngIf="items">
 
-    <ion-buttons start>
-      <button ion-button (click)="clearCart()">
-        Clear Cart
-        <ion-icon name="trash"></ion-icon>
-      </button>
-    </ion-buttons>
-
-    <ion-title></ion-title>
-
-    <ion-buttons start>
-      <button ion-button (click)="goCheckout()">
+      <button ion-button full color="dark" (click)="goCheckout()">
         Checkout
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
-    </ion-buttons>
+
   </ion-toolbar>
 </ion-footer>

@@ -10,6 +10,7 @@ import { Storage } from '@ionic/storage';
 export class CartPage {
 
 	items: any;
+	cart_total: number;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -31,7 +32,15 @@ export class CartPage {
 
 		this.storage.get( 'cart' ).then( data => {
 
+			if( !data )
+				return;
+
 			this.items = data
+
+			for (var i = 0; i < data.length; ++i) {
+				let total = parseInt( data[i].price ) * parseInt( data[i].quantity )
+				this.cart_total = ( this.cart_total ? this.cart_total : 0 ) + total
+			}
 
 		})
 
@@ -41,7 +50,7 @@ export class CartPage {
 
 		this.storage.remove( 'cart' )
 
-		this.viewCtrl.dismiss();
+		this.items = []
 
 	}
 

@@ -46,17 +46,38 @@
 	    <ion-input type="text" ngModel name="last_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
 	  </ion-item>
 
-	</div>
-
 	  <ion-item>
 	    <ion-label stacked>Email</ion-label>
 	    <ion-input type="email" ngModel name="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
 	  </ion-item>
 
 	  <ion-item>
+	    <ion-label stacked>Address</ion-label>
+	    <ion-input type="text" ngModel name="address_1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label stacked>City</ion-label>
+	    <ion-input type="text" ngModel name="city" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label stacked>State</ion-label>
+	    <ion-input type="text" ngModel name="state" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label stacked>Postcode</ion-label>
+	    <ion-input type="number" ngModel name="postcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	</div>
+
+	  <ion-item>
 	    <ion-label stacked>Payment Method</ion-label>
 	    <ion-select ngModel name="payment_method">
       		<ion-option value="bacs">BACS</ion-option>
+      		<ion-option value="paypal">Paypal</ion-option>
       	</ion-select>
 	  </ion-item>
 	  
