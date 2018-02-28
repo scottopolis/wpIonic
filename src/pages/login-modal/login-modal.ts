@@ -40,13 +40,13 @@ export class LoginModalPage {
 	start() {
 
 		this.storage.get('user_login').then( data => {
-	  if( data ) {
-	    // do checks here
-	    this.loggedin = true
-	  } else {
-	    this.loggedin = false
-	  }
-	})
+		  if( data ) {
+		    // do checks here
+		    this.loggedin = true
+		  } else {
+		    this.loggedin = false
+		  }
+		})
 
 	}
 

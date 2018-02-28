@@ -33,15 +33,24 @@ export class WooDetailPage {
 
 		if( this.selectedItem.description ) {
 		  this.description = this.sanitizer.bypassSecurityTrustHtml( this.selectedItem.description );
+		} else {
+			this.description = '';
 		}
 
 	}
 
-	addToCart(item) {
+	addToCart(form) {
+
+		let item = form.value
+
+		item.name = this.selectedItem.name
+		item.id = this.selectedItem.id
+		item.price = this.selectedItem.price
+		item.quantity = ( item.quantity ? item.quantity : 1 )
+
+		console.log(item)
 
 		this.storage.get( 'cart' ).then( data => {
-
-			console.log(data)
 
 			if( data ) {
 				data.push(item)

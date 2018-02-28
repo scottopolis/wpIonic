@@ -43,3 +43,24 @@
   </ion-list>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+
+    <ion-buttons start>
+      <button ion-button (click)="clearCart()">
+        Clear Cart
+        <ion-icon name="trash"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-title></ion-title>
+
+    <ion-buttons start>
+      <button ion-button (click)="goCheckout()">
+        Checkout
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

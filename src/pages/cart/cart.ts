@@ -37,6 +37,20 @@ export class CartPage {
 
 	}
 
+	clearCart() {
+
+		this.storage.remove( 'cart' )
+
+		this.viewCtrl.dismiss();
+
+	}
+
+	goCheckout() {
+
+		this.navCtrl.push('CheckoutPage');
+
+	}
+
 	dismiss() {
 		this.viewCtrl.dismiss();
 	}

@@ -1,5 +1,4 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
@@ -50,7 +49,7 @@ export class WooProvider {
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
-          'Authorization': 'Basic Y2tfOTQ5Yzg2OWJiMDAzZGYzOGMxZmY1YzQyMTE2YTFjODRmMDU4NmUzYzpjc184NjQ1NmQ4ODA4MzJjNzYwNmQyM2MzOWMxYTBlNjJjZDI5YWUzYTli'
+          'Authorization': 'Basic Y2tfZWUwMTBhOWQyOWYxN2Y5NjM4ZDViYjJhZWFhNDMyYzM4N2FmNTJiZTpjc18xMjM5MmYyYmVhMzlhYjZlYTM4NWExYWVmZWFjYzIyNDdkMTcxNjdm'
         })
       };
 
@@ -64,11 +63,46 @@ export class WooProvider {
         error => {
           // probably a bad url or 404
           reject(error);
-          console.log(error)
+          this.handleError(error)
         })
 
     }); // end Promise
     
+  }
+
+  order( data ) {
+
+    return new Promise( (resolve, reject) => {
+
+      if( !data )
+        reject({ data: { message: "No data." } })
+
+      let url = this.url + 'wp-json/wc/v2/orders'
+
+      // Basic auth requires base64 encoded string of 'Basic ' + btoa('key:secret')
+
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type':  'application/json',
+          'Authorization': 'Basic Y2tfZWUwMTBhOWQyOWYxN2Y5NjM4ZDViYjJhZWFhNDMyYzM4N2FmNTJiZTpjc18xMjM5MmYyYmVhMzlhYjZlYTM4NWExYWVmZWFjYzIyNDdkMTcxNjdm'
+        })
+      };
+
+      this.http.post( url, data, httpOptions )
+        .subscribe(data => {
+
+          this.data = data;
+
+          resolve(this.data);
+        },
+        error => {
+          // probably a bad url or 404
+          reject(error);
+          this.handleError(error)
+        })
+
+    }); // end Promise
+
   }
 
   handleError(err) {

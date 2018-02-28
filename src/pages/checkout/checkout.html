@@ -1,0 +1,69 @@
+<!--
+  Generated template for the CheckoutPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Checkout</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+	<ion-list>
+
+		<h2>Your Order</h2>
+
+		<ion-item *ngFor="let item of cart_contents">
+
+			<h3 *ngIf="item.name" [innerHTML]="item.name"></h3>
+
+			<p *ngIf="item.price && !item.sale_price" class="product-price">${{item.price}}</p>
+
+	    	<p *ngIf="item.sale_price" class="product-price">Sale! ${{item.sale_price}}</p>
+
+	    </ion-item>
+
+	</ion-list>
+
+	<h2>Billing Details</h2>
+
+	<form (ngSubmit)="doCheckout(checkoutForm)" #checkoutForm="ngForm">
+		
+	<div ngModelGroup="billing">
+
+	  <ion-item>
+	    <ion-label stacked>First Name</ion-label>
+	    <ion-input type="text" ngModel name="first_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label stacked>Last Name</ion-label>
+	    <ion-input type="text" ngModel name="last_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	</div>
+
+	  <ion-item>
+	    <ion-label stacked>Email</ion-label>
+	    <ion-input type="email" ngModel name="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+	  </ion-item>
+
+	  <ion-item>
+	    <ion-label stacked>Payment Method</ion-label>
+	    <ion-select ngModel name="payment_method">
+      		<ion-option value="bacs">BACS</ion-option>
+      	</ion-select>
+	  </ion-item>
+	  
+	  <div padding>
+	  <button ion-button type="submit" block>Submit</button>
+	  </div>
+
+	</form>
+
+</ion-content>
