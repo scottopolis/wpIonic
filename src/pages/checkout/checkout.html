@@ -73,12 +73,28 @@
 
 	</div>
 
+	<ion-item>
+		<ion-label stacked>Use same details for shipping?</ion-label>
+		<ion-checkbox checked="true" name="billing_shipping_same" ngModel>1</ion-checkbox>
+	</ion-item>
+
 	  <ion-item>
 	    <ion-label stacked>Payment Method</ion-label>
 	    <ion-select ngModel name="payment_method">
 			<ion-option  *ngFor="let gateway of gateways" value="{{gateway.id}}">{{gateway.title}}</ion-option>
 		</ion-select>
 	  </ion-item>
+
+	  <div ngModelGroup="shipping_lines">
+
+		<ion-item *ngIf="shipping_methods">
+			<ion-label stacked>Shipping</ion-label>
+			<ion-select ngModel name="method_id">
+				<ion-option *ngFor="let method of shipping_methods" value="{{method.id}}">{{method.title}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+	  </div>
 	  
 	  <div padding>
 	  <button ion-button type="submit" block>Submit</button>

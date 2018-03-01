@@ -23,6 +23,7 @@ export class CheckoutPage {
 	spinner: any
 	cart_contents: any
 	gateways: any
+	shipping_methods: any
 
 	constructor(
 		public navCtrl: NavController, 
@@ -43,6 +44,7 @@ export class CheckoutPage {
 		})
 
 		this.getGateways()
+		this.getShipping()
 
 	}
 
@@ -56,7 +58,15 @@ export class CheckoutPage {
 					this.gateways.push( response[i] )
 				}
 			}
-			this.gateways = response
+		})
+
+	}
+
+	getShipping() {
+
+		this.wooProvider.get( '/wp-json/wc/v2/shipping_methods', null ).then( response => {
+			console.log(response)
+			this.shipping_methods = response
 		})
 
 	}
@@ -76,6 +86,26 @@ export class CheckoutPage {
 			return;
 		}
 
+		if( order.billing.billing_shipping_same === false ) {
+			// fill shipping address
+		} else {
+			order.shipping = order.billing
+			console.log('shipping', order.shipping)
+		}
+
+		if( order.shipping_lines ) {
+
+			switch( order.shipping_lines.method_id ) {
+				case 'flat_rate':
+					order.shipping_lines.method_title = 'Flat Rate'
+					order.shipping_lines.total = '10'
+				break;
+			}
+
+		}
+
+		order.shipping_lines = [order.shipping_lines]
+
 		order.line_items = []
 
 		for (var i = 0; i < this.cart_contents.length; ++i) {
@@ -86,7 +116,7 @@ export class CheckoutPage {
 			}
 		}
 
-		console.log('line items', order.line_items)
+		console.log(order)
 
 		order.set_paid = true;
 
