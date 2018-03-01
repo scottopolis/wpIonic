@@ -22,6 +22,7 @@ export class CheckoutPage {
 	}
 	spinner: any
 	cart_contents: any
+	gateways: any
 
 	constructor(
 		public navCtrl: NavController, 
@@ -39,6 +40,23 @@ export class CheckoutPage {
 
 			this.cart_contents = data
 
+		})
+
+		this.getGateways()
+
+	}
+
+	getGateways() {
+
+		this.wooProvider.get( '/wp-json/wc/v2/payment_gateways', null ).then( response => {
+			console.log(response)
+			this.gateways = []
+			for (var i = 0; i < (<any>response).length; ++i) {
+				if( response[i].enabled ) {
+					this.gateways.push( response[i] )
+				}
+			}
+			this.gateways = response
 		})
 
 	}

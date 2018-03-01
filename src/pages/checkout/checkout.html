@@ -76,9 +76,8 @@
 	  <ion-item>
 	    <ion-label stacked>Payment Method</ion-label>
 	    <ion-select ngModel name="payment_method">
-      		<ion-option value="bacs">BACS</ion-option>
-      		<ion-option value="paypal">Paypal</ion-option>
-      	</ion-select>
+			<ion-option  *ngFor="let gateway of gateways" value="{{gateway.id}}">{{gateway.title}}</ion-option>
+		</ion-select>
 	  </ion-item>
 	  
 	  <div padding>
