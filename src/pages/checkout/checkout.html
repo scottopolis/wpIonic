@@ -1,105 +1,145 @@
-<!--
-  Generated template for the CheckoutPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
+
+    <ion-buttons start>
+      <button ion-button icon-only (click)="prevSlide()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+
     <ion-title>Checkout</ion-title>
+
+    <ion-buttons end></ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 <ion-content padding>
 
-	<ion-list>
-
-		<h2>Your Order</h2>
-
-		<ion-item *ngFor="let item of cart_contents">
-
-			<h3 *ngIf="item.name" [innerHTML]="item.name"></h3>
-
-			<p *ngIf="item.price && !item.sale_price" class="product-price">${{item.price}}</p>
-
-	    	<p *ngIf="item.sale_price" class="product-price">Sale! ${{item.sale_price}}</p>
-
-	    </ion-item>
-
-	</ion-list>
-
-	<h2>Billing Details</h2>
-
 	<form (ngSubmit)="doCheckout(checkoutForm)" #checkoutForm="ngForm">
-		
-	<div ngModelGroup="billing">
 
-	  <ion-item>
-	    <ion-label stacked>First Name</ion-label>
-	    <ion-input type="text" ngModel name="first_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+	<ion-slides (ionSlideDidChange)="slideChanged()">
+		<ion-slide>
+			<h2>Billing Details</h2>
 
-	  <ion-item>
-	    <ion-label stacked>Last Name</ion-label>
-	    <ion-input type="text" ngModel name="last_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+			<ion-list>
 
-	  <ion-item>
-	    <ion-label stacked>Email</ion-label>
-	    <ion-input type="email" ngModel name="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+			<div ngModelGroup="billing">
 
-	  <ion-item>
-	    <ion-label stacked>Address</ion-label>
-	    <ion-input type="text" ngModel name="address_1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+				<ion-item>
+				<ion-label stacked>First Name</ion-label>
+				<ion-input type="text" ngModel name="first_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	  <ion-item>
-	    <ion-label stacked>City</ion-label>
-	    <ion-input type="text" ngModel name="city" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+				<ion-item>
+				<ion-label stacked>Last Name</ion-label>
+				<ion-input type="text" ngModel name="last_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	  <ion-item>
-	    <ion-label stacked>State</ion-label>
-	    <ion-input type="text" ngModel name="state" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+				<ion-item>
+				<ion-label stacked>Email</ion-label>
+				<ion-input type="email" ngModel name="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	  <ion-item>
-	    <ion-label stacked>Postcode</ion-label>
-	    <ion-input type="number" ngModel name="postcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
-	  </ion-item>
+				<ion-item>
+				<ion-label stacked>Address</ion-label>
+				<ion-input type="text" ngModel name="address_1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	</div>
+				<ion-item>
+				<ion-label stacked>City</ion-label>
+				<ion-input type="text" ngModel name="city" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	<ion-item>
-		<ion-label stacked>Use same details for shipping?</ion-label>
-		<ion-checkbox checked="true" name="billing_shipping_same" ngModel>1</ion-checkbox>
-	</ion-item>
+				<ion-item>
+				<ion-label stacked>State</ion-label>
+				<ion-input type="text" ngModel name="state" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	  <ion-item>
-	    <ion-label stacked>Payment Method</ion-label>
-	    <ion-select ngModel name="payment_method">
-			<ion-option  *ngFor="let gateway of gateways" value="{{gateway.id}}">{{gateway.title}}</ion-option>
-		</ion-select>
-	  </ion-item>
+				<ion-item>
+				<ion-label stacked>Postcode</ion-label>
+				<ion-input type="number" ngModel name="postcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
 
-	  <div ngModelGroup="shipping_lines">
+			</div>
 
-		<ion-item *ngIf="shipping_methods">
-			<ion-label stacked>Shipping</ion-label>
-			<ion-select ngModel name="method_id">
-				<ion-option *ngFor="let method of shipping_methods" value="{{method.id}}">{{method.title}}</ion-option>
-			</ion-select>
-		</ion-item>
+			<ion-item>
+			<ion-label stacked>Use same details for shipping?</ion-label>
+			<ion-checkbox checked="true" name="billing_shipping_same" ngModel>1</ion-checkbox>
+			</ion-item>
 
-	  </div>
+			</ion-list>
+
+		</ion-slide>
+
+		<ion-slide>
+
+			<h2>Shipping</h2>
+
+			<div ngModelGroup="shipping_lines">
+
+				<ion-list radio-group ngModel name="method_id">
+
+					<ion-item *ngFor="let method of shipping_methods">
+					<ion-label>{{method.title}}</ion-label>
+					<ion-radio value="{{method.id}}"></ion-radio>
+					</ion-item>
+
+				</ion-list>
+
+			</div>
+
+		</ion-slide>
+
+		<ion-slide>
+
+			<h2>Payment Method</h2>
+
+			<ion-list>
+
+				<ion-item>
+				<ion-label stacked>Payment Method</ion-label>
+				<ion-select ngModel name="payment_method">
+				<ion-option  *ngFor="let gateway of gateways" value="{{gateway.id}}">{{gateway.title}}</ion-option>
+				</ion-select>
+				</ion-item>
+
+			</ion-list>
+
+		</ion-slide>
+
+		<ion-slide>
+
+			<h2>Order Summary</h2>
+
+			<ion-list>
+
+				<ion-item *ngFor="let item of cart_contents">
+
+				<h3 *ngIf="item.name" [innerHTML]="item.name"></h3>
+
+				<p *ngIf="item.price && !item.sale_price" class="product-price">${{item.price}}</p>
+
+				<p *ngIf="item.sale_price" class="product-price">Sale! ${{item.sale_price}}</p>
+
+				</ion-item>
+
+				<div padding>
+				<button ion-button type="submit" block>Place Order</button>
+				</div>
+
+			</ion-list>
+
+		</ion-slide>
+
+	</ion-slides>
 	  
-	  <div padding>
-	  <button ion-button type="submit" block>Submit</button>
-	  </div>
 
 	</form>
 
 </ion-content>
+
+<ion-footer *ngIf="!isLastSlide">
+	<div class="checkout-button" (click)="nextSlide()">Continue</div>
+</ion-footer>

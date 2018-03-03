@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ViewController, ToastController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, ViewController, ToastController, Slides } from 'ionic-angular';
 import { WooProvider } from '../../providers/woo/woo';
 import { Storage } from '@ionic/storage';
 
@@ -17,6 +17,8 @@ import { Storage } from '@ionic/storage';
 })
 export class CheckoutPage {
 
+	@ViewChild(Slides) slides: Slides;
+
 	order: any = {
 		billing: Object
 	}
@@ -24,6 +26,7 @@ export class CheckoutPage {
 	cart_contents: any
 	gateways: any
 	shipping_methods: any
+	isLastSlide: boolean = false
 
 	constructor(
 		public navCtrl: NavController, 
@@ -36,6 +39,9 @@ export class CheckoutPage {
 		) {
 
 		this.storage.get( 'cart' ).then( data => {
+
+			if( !data )
+				this.presentToast( 'No cart items.' );
 
 			console.log('cart', data)
 
@@ -178,6 +184,22 @@ export class CheckoutPage {
 
 	    toast.present();
 
+	}
+
+	nextSlide() {
+		this.slides.slideNext()
+	}
+
+	prevSlide() {
+		this.slides.slidePrev()
+	}
+
+	slideChanged() {
+		if( this.slides.isEnd() ) {
+			this.isLastSlide = true
+		} else {
+			this.isLastSlide = false
+		}
 	}
 
 }
