@@ -143,6 +143,8 @@ export class CheckoutPage {
 			  receipt: response
 			}, opt);
 
+			this.dismiss()
+
 		}, (err) => {
 
 		this.hideSpinner()

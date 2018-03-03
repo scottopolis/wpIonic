@@ -57,6 +57,7 @@ export class CartPage {
 	goCheckout() {
 
 		this.navCtrl.push('CheckoutPage');
+		this.dismiss()
 
 	}
 

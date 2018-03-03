@@ -17,4 +17,12 @@ page-woo-detail {
 		color: Green;
 	}
 
+	.item.quantity {
+		max-width: 100px
+	}
+
+	.button[type="submit"] {
+		margin-top: 15px;
+	}
+
 }

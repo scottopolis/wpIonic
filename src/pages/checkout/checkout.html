@@ -1,16 +1,15 @@
 <ion-header>
 
-  <ion-navbar>
-
-    <ion-buttons start>
-      <button ion-button icon-only (click)="prevSlide()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
+  <ion-navbar hideBackButton="true">
 
     <ion-title>Checkout</ion-title>
 
-    <ion-buttons end></ion-buttons>
+    <ion-buttons end>
+		<button ion-button (click)="dismiss()">
+			Cancel
+		</button>
+	</ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
@@ -75,6 +74,8 @@
 
 		<ion-slide *ngIf="!billing_shipping_same">
 
+			<ion-icon name="arrow-back" class="checkout-slide-back" (click)="prevSlide()"></ion-icon>
+
 			<h2>Shipping Address</h2>
 
 			<div ngModelGroup="shipping">
@@ -119,6 +120,8 @@
 		</ion-slide>
 
 		<ion-slide>
+			
+			<ion-icon name="arrow-back" class="checkout-slide-back" (click)="prevSlide()"></ion-icon>
 
 			<h2>Shipping Method</h2>
 
@@ -139,6 +142,8 @@
 
 		<ion-slide>
 
+			<ion-icon name="arrow-back" class="checkout-slide-back" (click)="prevSlide()"></ion-icon>
+
 			<h2>Payment Method</h2>
 
 			<ion-list>
@@ -155,6 +160,8 @@
 		</ion-slide>
 
 		<ion-slide>
+
+			<ion-icon name="arrow-back" class="checkout-slide-back" (click)="prevSlide()"></ion-icon>
 
 			<h2>Order Summary</h2>
 
