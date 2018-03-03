@@ -66,16 +66,61 @@
 
 			<ion-item>
 			<ion-label stacked>Use same details for shipping?</ion-label>
-			<ion-checkbox checked="true" name="billing_shipping_same" ngModel>1</ion-checkbox>
+			<ion-checkbox name="billing_shipping_same" ngModel (ionChange)="billingShippingToggle($event)" checked="true">1</ion-checkbox>
 			</ion-item>
 
 			</ion-list>
 
 		</ion-slide>
 
+		<ion-slide *ngIf="!billing_shipping_same">
+
+			<h2>Shipping Address</h2>
+
+			<div ngModelGroup="shipping">
+
+				<ion-item>
+				<ion-label stacked>First Name</ion-label>
+				<ion-input type="text" ngModel name="first_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+				<ion-item>
+				<ion-label stacked>Last Name</ion-label>
+				<ion-input type="text" ngModel name="last_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+				<ion-item>
+				<ion-label stacked>Email</ion-label>
+				<ion-input type="email" ngModel name="email" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+				<ion-item>
+				<ion-label stacked>Address</ion-label>
+				<ion-input type="text" ngModel name="address_1" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+				<ion-item>
+				<ion-label stacked>City</ion-label>
+				<ion-input type="text" ngModel name="city" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+				<ion-item>
+				<ion-label stacked>State</ion-label>
+				<ion-input type="text" ngModel name="state" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+				<ion-item>
+				<ion-label stacked>Postcode</ion-label>
+				<ion-input type="number" ngModel name="postcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
+				</ion-item>
+
+			</div>
+
+		</ion-slide>
+
 		<ion-slide>
 
-			<h2>Shipping</h2>
+			<h2>Shipping Method</h2>
 
 			<div ngModelGroup="shipping_lines">
 

@@ -27,6 +27,7 @@ export class CheckoutPage {
 	gateways: any
 	shipping_methods: any
 	isLastSlide: boolean = false
+	billing_shipping_same: boolean = true
 
 	constructor(
 		public navCtrl: NavController, 
@@ -92,7 +93,7 @@ export class CheckoutPage {
 			return;
 		}
 
-		if( order.billing.billing_shipping_same === false ) {
+		if( order.billing_shipping_same === false ) {
 			// fill shipping address
 		} else {
 			order.shipping = order.billing
@@ -195,11 +196,17 @@ export class CheckoutPage {
 	}
 
 	slideChanged() {
+
 		if( this.slides.isEnd() ) {
 			this.isLastSlide = true
 		} else {
 			this.isLastSlide = false
 		}
+	}
+
+	billingShippingToggle(e) {
+		this.billing_shipping_same = e.checked
+		console.log(e.checked)
 	}
 
 }
