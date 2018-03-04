@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Events } from 'ionic-angular';
+import { NavController, ModalController, Events, IonicPage } from 'ionic-angular';
 import {Storage} from '@ionic/storage';
 
+@IonicPage()
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'

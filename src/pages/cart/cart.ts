@@ -52,6 +52,8 @@ export class CartPage {
 
 		this.items = []
 
+		this.cart_total = 0
+
 	}
 
 	goCheckout() {
