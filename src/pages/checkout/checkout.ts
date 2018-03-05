@@ -93,7 +93,13 @@ export class CheckoutPage {
 			return;
 		}
 
-		if( order.billing_shipping_same === false ) {
+		if( !order.billing.first_name || !order.billing.postcode || !order.payment_method ) {
+			this.presentToast( 'Please fill out all required fields.' );
+			this.slides.slideTo(0)
+			return;
+		}
+
+		if( order.billing.billing_shipping_same === false ) {
 			// fill shipping address
 		} else {
 			order.shipping = order.billing
@@ -117,7 +123,7 @@ export class CheckoutPage {
 
 		for (var i = 0; i < this.cart_contents.length; ++i) {
 			order.line_items[i] = {
-				product_id: this.cart_contents[i].id,
+				product_id: this.cart_contents[i].product_id,
 				variation_id: this.cart_contents[i].variation_id,
 				quantity: parseInt( this.cart_contents[i].quantity )
 			}

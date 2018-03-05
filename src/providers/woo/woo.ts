@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the WooProvider.
@@ -14,7 +15,10 @@ export class WooProvider {
   data: any = null;
   url: string = 'https://appdev.local/';
 
-  constructor(public http: HttpClient) {
+  constructor(
+    public http: HttpClient,
+    public storage: Storage
+    ) {
 
   }
 
@@ -28,11 +32,6 @@ export class WooProvider {
       if( !route )
         reject({ data: { message: "No URL set. " } })
 
-      // set pagination
-      if( !page ) {
-        let page = '1';
-      }
-
       var concat;
 
       // check if url already has a query param
@@ -42,7 +41,21 @@ export class WooProvider {
         concat = '?';
       }
 
-      let url = this.url + route + concat + 'page=' + page;
+      console.log('page ' + page)
+
+      let url = this.url + route;
+
+      // set pagination
+      if( page === 'nopaging' ) {
+        // don't add page
+        url = url
+      } else if( page ) {
+        url = url + concat + 'page=' + page
+      } else {
+        url = url + concat + 'page=1'
+      }
+
+      console.log( 'url' + url)
 
       // Basic auth requires base64 encoded string of 'Basic ' + btoa('key:secret')
 
@@ -102,6 +115,18 @@ export class WooProvider {
         })
 
     }); // end Promise
+
+  }
+
+  getCartContents() {
+
+    return new Promise( (resolve, reject) => {
+
+      this.storage.get( 'cart' ).then( data => {
+        resolve( data )
+      })
+
+    })
 
   }
 

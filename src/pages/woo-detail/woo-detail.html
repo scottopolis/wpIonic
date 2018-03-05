@@ -38,19 +38,19 @@
 
 	<form (ngSubmit)="addToCart(addToCartForm)" #addToCartForm="ngForm">
 
-		<!-- <ion-item *ngFor="let attr of selectedItem.attributes">
-			<ion-label stacked>{{attr.name}}</ion-label>
-			<ion-select ngModel name="{{attr.name}}">
-				<ion-option *ngFor="let key of attr.options" value="{{key}}">{{key}}</ion-option>
-			</ion-select>
-		</ion-item> -->
-
-		<ion-item *ngIf="selectedItem.variations.length">
-			<ion-label stacked>Variations</ion-label>
-			<ion-select ngModel name="variation_id">
-				<ion-option  *ngFor="let key of selectedItem.variations" value="{{key}}">{{key}}</ion-option>
-			</ion-select>
-		</ion-item>
+		<div *ngIf="variations">
+			<ion-item>
+				<ion-label stacked>Options</ion-label>
+				<ion-select ngModel name="variation_id">
+					<ion-option *ngFor="let variation of variations" value="{{variation.id}}">
+						${{variation.price}} - 
+						<div *ngFor="let attr of variation.attributes">
+							{{attr.name}} : {{attr.option}}
+						</div>
+					</ion-option>
+				</ion-select>
+			</ion-item>
+		</div>
 
 		<ion-item class="quantity">
 			<ion-label stacked>Quantity</ion-label>

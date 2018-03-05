@@ -22,9 +22,7 @@
 		<ion-slide>
 			<h2>Billing Details</h2>
 
-			<ion-list>
-
-			<div ngModelGroup="billing">
+			<ion-list ngModelGroup="billing">
 
 				<ion-item>
 				<ion-label stacked>First Name</ion-label>
@@ -61,12 +59,10 @@
 				<ion-input type="number" ngModel name="postcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
 				</ion-item>
 
-			</div>
-
-			<ion-item>
-			<ion-label stacked>Use same details for shipping?</ion-label>
-			<ion-checkbox name="billing_shipping_same" ngModel (ionChange)="billingShippingToggle($event)" checked="true">1</ion-checkbox>
-			</ion-item>
+				<ion-item>
+				<ion-label stacked>Use same details for shipping?</ion-label>
+				<ion-checkbox name="billing_shipping_same" ngModel (ionChange)="billingShippingToggle($event)" checked="true">1</ion-checkbox>
+				</ion-item>
 
 			</ion-list>
 

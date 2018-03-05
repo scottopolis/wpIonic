@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
+import { WooProvider } from '../../providers/woo/woo';
 
 @IonicPage()
 @Component({
@@ -13,6 +14,7 @@ export class WooDetailPage {
 	selectedItem: any;
 	description: any;
 	cartModal: any;
+	variations: any;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -20,7 +22,8 @@ export class WooDetailPage {
 		public sanitizer: DomSanitizer,
 		public storage: Storage,
 		public toastCtrl: ToastController,
-		public modalCtrl: ModalController
+		public modalCtrl: ModalController,
+		public wooProvider: WooProvider
 		) {
 
 		this.loadProduct()
@@ -37,6 +40,8 @@ export class WooDetailPage {
 			this.description = '';
 		}
 
+		this.getVariations()
+
 	}
 
 	addToCart(form) {
@@ -44,7 +49,7 @@ export class WooDetailPage {
 		let item = form.value
 
 		item.name = this.selectedItem.name
-		item.id = this.selectedItem.id
+		item.product_id = this.selectedItem.id
 		item.price = this.selectedItem.price
 		item.quantity = ( item.quantity ? item.quantity : 1 )
 
@@ -64,6 +69,14 @@ export class WooDetailPage {
 
 			this.presentToast( item.name + ' added to cart!')
 
+		})
+
+	}
+
+	getVariations() {
+
+		this.wooProvider.get( 'wp-json/wc/v2/products/' + this.selectedItem.id + '/variations', 'nopaging' ).then(variations => {
+			this.variations = variations
 		})
 
 	}

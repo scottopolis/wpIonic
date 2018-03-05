@@ -20,6 +20,7 @@ export class WooListPage {
 	page: number = 1;
 	route: string;
 	cartModal: any;
+	cart_count: any;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -36,6 +37,11 @@ export class WooListPage {
 
 	ionViewDidLoad() {
 		this.loadProducts()
+
+		this.wooProvider.getCartContents().then( cart => {
+			this.cart_count = ( cart ? (<any>cart).length : '' )
+		})
+		
 	}
 
 	loadProducts() {
