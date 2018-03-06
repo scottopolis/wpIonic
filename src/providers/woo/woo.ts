@@ -83,14 +83,14 @@ export class WooProvider {
     
   }
 
-  order( data ) {
+  send( data, route ) {
 
     return new Promise( (resolve, reject) => {
 
       if( !data )
         reject({ data: { message: "No data." } })
 
-      let url = this.url + 'wp-json/wc/v2/orders'
+      let url = this.url + route
 
       // Basic auth requires base64 encoded string of 'Basic ' + btoa('key:secret')
 

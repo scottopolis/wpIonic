@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Thank You!</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<div *ngIf="order">
+		<h2>Thank you for your order!</h2>
+
+		<ion-list>
+
+			<ion-item *ngFor="let item of order.line_items">
+				<p>{{item.name}}</p>
+				<p>{{item.total}}</p>
+			</ion-item>
+			<ion-item><strong>Total: {{order.total}}</strong></ion-item>
+			<ion-item><p>Status: {{order.status}}</p></ion-item>
+		</ion-list>
+
+	</div>
+
+</ion-content>

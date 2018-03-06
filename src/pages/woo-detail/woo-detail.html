@@ -39,7 +39,7 @@
 	<form (ngSubmit)="addToCart(addToCartForm)" #addToCartForm="ngForm">
 
 		<div *ngIf="variations">
-			<ion-item>
+			<ion-item *ngIf="variations.length">
 				<ion-label stacked>Options</ion-label>
 				<ion-select ngModel name="variation_id">
 					<ion-option *ngFor="let variation of variations" value="{{variation.id}}">

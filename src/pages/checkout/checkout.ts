@@ -1,7 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ViewController, ToastController, Slides } from 'ionic-angular';
 import { WooProvider } from '../../providers/woo/woo';
 import { Storage } from '@ionic/storage';
+import { StripeService, Elements, Element as StripeElement, ElementsOptions } from "ngx-stripe";
 
 /**
  * Generated class for the CheckoutPage page.
@@ -15,7 +16,7 @@ import { Storage } from '@ionic/storage';
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
 })
-export class CheckoutPage {
+export class CheckoutPage implements OnInit {
 
 	@ViewChild(Slides) slides: Slides;
 
@@ -28,6 +29,13 @@ export class CheckoutPage {
 	shipping_methods: any
 	isLastSlide: boolean = false
 	billing_shipping_same: boolean = true
+	elements: Elements;
+  	card: StripeElement;
+	@ViewChild('card') cardRef: ElementRef;
+	// optional parameters
+	elementsOptions: ElementsOptions = {
+		locale: 'en'
+	};
 
 	constructor(
 		public navCtrl: NavController, 
@@ -36,7 +44,8 @@ export class CheckoutPage {
 		public loadingCtrl: LoadingController,
 		public viewCtrl: ViewController,
 		public storage: Storage,
-		public toastCtrl: ToastController
+		public toastCtrl: ToastController,
+		private stripeService: StripeService
 		) {
 
 		this.storage.get( 'cart' ).then( data => {
@@ -53,7 +62,14 @@ export class CheckoutPage {
 		this.getGateways()
 		this.getShipping()
 
+		
+
 	}
+
+	ngOnInit() {
+		this.loadStripe()
+	}
+
 
 	getGateways() {
 
@@ -76,6 +92,34 @@ export class CheckoutPage {
 			this.shipping_methods = response
 		})
 
+	}
+
+	loadStripe() {
+
+		this.stripeService.elements( this.elementsOptions )
+	      .subscribe(elements => {
+	        this.elements = elements;
+	        // Only mount the element the first time
+	        if (!this.card) {
+	        	console.log('creating card')
+	          this.card = this.elements.create('card', {
+	            style: {
+	              base: {
+	                iconColor: '#666EE8',
+	                color: '#31325F',
+	                lineHeight: '40px',
+	                fontWeight: 300,
+	                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+	                fontSize: '18px',
+	                '::placeholder': {
+	                  color: '#CFD7E0'
+	                }
+	              }
+	            }
+	          });
+	          this.card.mount('#card-element');
+	        }
+	      });
 	}
 
 	doCheckout( data ) {
@@ -129,27 +173,20 @@ export class CheckoutPage {
 			}
 		}
 
-		console.log(order)
-
-		order.set_paid = true;
-
 		this.showSpinner()
 
-		this.wooProvider.order( order ).then( response => {
+		this.wooProvider.send( order, 'wp-json/wc/v2/orders' ).then( response => {
 
-			console.log(response)
-			this.hideSpinner()
-			this.presentToast( 'Thank you for your order!' );
+			if( !(<any>response).id ) {
+				console.log(response)
+				this.hideSpinner()
+				this.presentToast( 'There was a problem processing your order, please try again.' );
+				return;
+			}
 
-			this.storage.remove( 'cart' )
-
-			let opt = {};
-
-			this.navCtrl.push('AccountPage', {
-			  receipt: response
-			}, opt);
-
-			this.dismiss()
+			if( order.payment_method === 'stripe' ) {
+				this.stripePayment((<any>response).id, this.card, order.billing.first_name)
+			}
 
 		}, (err) => {
 
@@ -166,6 +203,65 @@ export class CheckoutPage {
 		setTimeout( () => {
 			this.hideSpinner();
 		}, 5000 );
+
+	}
+
+	stripePayment( order_id, card, name ) {
+
+		console.log('stripe payment', order_id, card, name)
+
+		this.stripeService
+	      .createToken(card, { name })
+	      .subscribe(result => {
+	        if (result.token) {
+	          // Use the token to create a charge or a customer
+	          // https://stripe.com/docs/charges
+	          console.log(result);
+	          this.sendToken( result.token.id, order_id )
+	        } else if (result.error) {
+	          // Error creating the token
+	          console.log(result.error.message);
+	        }
+	      });
+
+	}
+
+	sendToken( token, order_id ) {
+
+		let data = {
+			order_id: order_id,
+			payment_token: token,
+			payment_method: 'stripe'
+		}
+
+		console.log('send token', data)
+
+		this.wooProvider.send( data, 'wp-json/wc/v2/stripe_payment' ).then( response => {
+
+			console.log(response)
+
+			this.presentToast( 'Thank you for your order!' );
+
+			this.storage.remove( 'cart' )
+
+			let opt = {};
+
+			this.navCtrl.push('ThanksPage', {
+			  order_id: order_id
+			}, opt);
+
+			this.dismiss()
+
+		}, (err) => {
+
+		this.hideSpinner()
+		console.log(err)
+
+		}).catch( e => {
+			console.warn(e)
+			this.hideSpinner()
+			this.presentToast( 'There was a problem connecting to the server.' );
+		})
 
 	}
 

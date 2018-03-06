@@ -13,6 +13,8 @@ import { CameraProvider } from '../providers/camera/camera';
 import { PostsProvider } from '../providers/posts/posts';
 import { WooProvider } from '../providers/woo/woo';
 
+import { NgxStripeModule } from 'ngx-stripe';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -22,7 +24,8 @@ import { WooProvider } from '../providers/woo/woo';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    NgxStripeModule.forRoot('pk_test_07YFA0DDYu5miC2ijbhzWOXw')
   ],
   bootstrap: [IonicApp],
   entryComponents: [
