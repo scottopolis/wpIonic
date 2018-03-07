@@ -122,6 +122,8 @@ export class CheckoutPage implements OnInit {
 	      });
 	}
 
+	submit() {}
+
 	doCheckout( data ) {
 
 		console.log(data.value)
@@ -236,7 +238,7 @@ export class CheckoutPage implements OnInit {
 
 		console.log('send token', data)
 
-		this.wooProvider.send( data, 'wp-json/wc/v2/stripe_payment' ).then( response => {
+		this.wooProvider.send( data, 'wp-json/wc/v2/stripe-payment' ).then( response => {
 
 			console.log(response)
 
