@@ -119,15 +119,26 @@
 			
 			<ion-icon name="arrow-back" class="checkout-slide-back" (click)="prevSlide()"></ion-icon>
 
-			<h2>Shipping Method</h2>
+			<h2>Choose a shipping zone</h2>
 
-			<div ngModelGroup="shipping_lines">
+			<ion-list radio-group ngModel name="shipping_zone" (ionChange)="zoneChange($event)">
+
+				<ion-item *ngFor="let zone of shipping_zones">
+				<ion-label>{{zone.name}}</ion-label>
+				<ion-radio value="{{zone.id}}"></ion-radio>
+				</ion-item>
+
+			</ion-list>
+			
+			<div ngModelGroup="shipping_lines" *ngIf="shipping_methods">
+
+			<h2>Shipping Method</h2>
 
 				<ion-list radio-group ngModel name="method_id">
 
 					<ion-item *ngFor="let method of shipping_methods">
-					<ion-label>{{method.title}}</ion-label>
-					<ion-radio value="{{method.id}}"></ion-radio>
+					<ion-label>{{method.method_title}} ${{ method.settings.cost ? method.settings.cost.value : '0'}}</ion-label>
+					<ion-radio value="{{method.method_id}}::{{method.method_title}}::{{ method.settings.cost ? method.settings.cost.value : 0}}"></ion-radio>
 					</ion-item>
 
 				</ion-list>
@@ -147,13 +158,16 @@
 				<ion-item>
 				<ion-label stacked>Payment Method</ion-label>
 				<ion-select ngModel name="payment_method">
-				<ion-option  *ngFor="let gateway of gateways" value="{{gateway.id}}">{{gateway.title}}</ion-option>
+				<ion-option  *ngFor="let gateway of gateways" value="{{gateway.id}}" (ionSelect)="gatewaySelected($event)">{{gateway.title}}</ion-option>
 				</ion-select>
 				</ion-item>
 
 			</ion-list>
 			
-			<div id="card-element" class="field"></div>
+			<div id="stripe-payment-form" [hidden]="!stripe_selected">
+				<h2>Credit Card Details</h2>
+				<div id="card-element" class="field"></div>
+			</div>
 
 		</ion-slide>
 

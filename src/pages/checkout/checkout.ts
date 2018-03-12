@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ViewController, ToastController, Slides } from 'ionic-angular';
 import { WooProvider } from '../../providers/woo/woo';
 import { Storage } from '@ionic/storage';
@@ -16,7 +16,7 @@ import { StripeService, Elements, Element as StripeElement, ElementsOptions } fr
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
 })
-export class CheckoutPage implements OnInit {
+export class CheckoutPage {
 
 	@ViewChild(Slides) slides: Slides;
 
@@ -31,6 +31,9 @@ export class CheckoutPage implements OnInit {
 	billing_shipping_same: boolean = true
 	elements: Elements;
   	card: StripeElement;
+  	zones: any;
+  	stripe_selected: boolean = false
+
 	@ViewChild('card') cardRef: ElementRef;
 	// optional parameters
 	elementsOptions: ElementsOptions = {
@@ -60,16 +63,10 @@ export class CheckoutPage implements OnInit {
 		})
 
 		this.getGateways()
-		this.getShipping()
-
-		
-
-	}
-
-	ngOnInit() {
+		this.getShippingZones()
 		this.loadStripe()
-	}
 
+	}
 
 	getGateways() {
 
@@ -85,12 +82,40 @@ export class CheckoutPage implements OnInit {
 
 	}
 
-	getShipping() {
+	getShippingZones() {
 
-		this.wooProvider.get( '/wp-json/wc/v2/shipping_methods', null ).then( response => {
+		this.wooProvider.get( '/wp-json/wc/v2/shipping/zones', null ).then( response => {
+			console.log(response)
+			this.shipping_zones = response
+		})
+
+	}
+
+	zoneChange( zone_id ) {
+		console.log(zone_id)
+
+		if( zone_id ) {
+			this.getShippingMethods( zone_id )
+		}
+	}
+
+	getShippingMethods( id ) {
+
+		this.wooProvider.get( '/wp-json/wc/v2/shipping/zones/' + id + '/methods', 'nopaging' ).then( response => {
 			console.log(response)
 			this.shipping_methods = response
 		})
+
+	}
+
+	gatewaySelected( gateway ) {
+
+		console.log(gateway)
+		if( gateway === 'stripe' ) {
+			this.stripe_selected = true
+		} else {
+			this.stripe_selected = false
+		}
 
 	}
 
@@ -152,18 +177,18 @@ export class CheckoutPage implements OnInit {
 			console.log('shipping', order.shipping)
 		}
 
-		if( order.shipping_lines ) {
+		if( order.shipping_lines && order.shipping_lines.method_id ) {
 
-			switch( order.shipping_lines.method_id ) {
-				case 'flat_rate':
-					order.shipping_lines.method_title = 'Flat Rate'
-					order.shipping_lines.total = '10'
-				break;
-			}
+			let split = order.shipping_lines.method_id.split("::")
+			order.shipping_lines.method_id = split[0]
+			order.shipping_lines.method_title = split[1]
+			order.shipping_lines.total = split[2]
 
 		}
 
 		order.shipping_lines = [order.shipping_lines]
+
+		console.log(order.shipping_lines)
 
 		order.line_items = []
 
