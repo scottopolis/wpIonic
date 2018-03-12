@@ -163,9 +163,10 @@
 				</ion-item>
 
 			</ion-list>
+
+			<p *ngIf="gateway_instructions != ''">{{gateway_instructions}}</p>
 			
 			<div id="stripe-payment-form" [hidden]="!stripe_selected">
-				<h2>Credit Card Details</h2>
 				<div id="card-element" class="field"></div>
 			</div>
 

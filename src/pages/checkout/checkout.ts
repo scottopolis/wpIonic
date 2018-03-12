@@ -33,6 +33,7 @@ export class CheckoutPage {
   	card: StripeElement;
   	zones: any;
   	stripe_selected: boolean = false
+  	gateway_instructions: string = ''
 
 	@ViewChild('card') cardRef: ElementRef;
 	// optional parameters
@@ -112,10 +113,22 @@ export class CheckoutPage {
 
 	gatewaySelected( gateway ) {
 
+		// console.log(gateway, this.gateways)
+
 		if( gateway === 'stripe' ) {
 			this.stripe_selected = true
 		} else {
 			this.stripe_selected = false
+		}
+
+		for (var i = 0; i < this.gateways.length; ++i) {
+
+			if( gateway === this.gateways[i].id ) {
+				this.gateway_instructions = this.gateways[i].description
+				return;
+			} else {
+				this.gateway_instructions = ''
+			}
 		}
 
 	}
