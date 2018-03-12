@@ -71,7 +71,7 @@ export class CheckoutPage {
 	getGateways() {
 
 		this.wooProvider.get( '/wp-json/wc/v2/payment_gateways', null ).then( response => {
-			console.log(response)
+			// console.log(response)
 			this.gateways = []
 			for (var i = 0; i < (<any>response).length; ++i) {
 				if( response[i].enabled ) {
@@ -82,27 +82,29 @@ export class CheckoutPage {
 
 	}
 
+	// first we need to get the zones, which have all the data we need
 	getShippingZones() {
 
 		this.wooProvider.get( '/wp-json/wc/v2/shipping/zones', null ).then( response => {
-			console.log(response)
+			// console.log(response)
 			this.shipping_zones = response
 		})
 
 	}
 
+	// once a zone is selected, we get the methods from that zone
 	zoneChange( zone_id ) {
-		console.log(zone_id)
 
 		if( zone_id ) {
 			this.getShippingMethods( zone_id )
 		}
 	}
 
+	// get methods from a specific zone, which has cost data
 	getShippingMethods( id ) {
 
 		this.wooProvider.get( '/wp-json/wc/v2/shipping/zones/' + id + '/methods', 'nopaging' ).then( response => {
-			console.log(response)
+			// console.log(response)
 			this.shipping_methods = response
 		})
 
@@ -110,7 +112,6 @@ export class CheckoutPage {
 
 	gatewaySelected( gateway ) {
 
-		console.log(gateway)
 		if( gateway === 'stripe' ) {
 			this.stripe_selected = true
 		} else {
@@ -151,7 +152,7 @@ export class CheckoutPage {
 
 	doCheckout( data ) {
 
-		console.log(data.value)
+		// console.log(data.value)
 		let order = data.value
 		
 		if( !order ) {
@@ -174,7 +175,6 @@ export class CheckoutPage {
 			// fill shipping address
 		} else {
 			order.shipping = order.billing
-			console.log('shipping', order.shipping)
 		}
 
 		if( order.shipping_lines && order.shipping_lines.method_id ) {
@@ -188,7 +188,7 @@ export class CheckoutPage {
 
 		order.shipping_lines = [order.shipping_lines]
 
-		console.log(order.shipping_lines)
+		// console.log(order.shipping_lines)
 
 		order.line_items = []
 
@@ -205,7 +205,7 @@ export class CheckoutPage {
 		this.wooProvider.send( order, 'wp-json/wc/v2/orders' ).then( response => {
 
 			if( !(<any>response).id ) {
-				console.log(response)
+				// console.log(response)
 				this.hideSpinner()
 				this.presentToast( 'There was a problem processing your order, please try again.' );
 				return;
@@ -235,7 +235,7 @@ export class CheckoutPage {
 
 	stripePayment( order_id, card, name ) {
 
-		console.log('stripe payment', order_id, card, name)
+		// console.log('stripe payment', order_id, card, name)
 
 		this.stripeService
 	      .createToken(card, { name })
@@ -243,7 +243,6 @@ export class CheckoutPage {
 	        if (result.token) {
 	          // Use the token to create a charge or a customer
 	          // https://stripe.com/docs/charges
-	          console.log(result);
 	          this.sendToken( result.token.id, order_id )
 	        } else if (result.error) {
 	          // Error creating the token
@@ -261,11 +260,11 @@ export class CheckoutPage {
 			payment_method: 'stripe'
 		}
 
-		console.log('send token', data)
+		// console.log('send token', data)
 
 		this.wooProvider.send( data, 'wp-json/wc/v2/stripe-payment' ).then( response => {
 
-			console.log(response)
+			// console.log(response)
 
 			this.presentToast( 'Thank you for your order!' );
 
@@ -337,7 +336,6 @@ export class CheckoutPage {
 
 	billingShippingToggle(e) {
 		this.billing_shipping_same = e.checked
-		console.log(e.checked)
 	}
 
 }
