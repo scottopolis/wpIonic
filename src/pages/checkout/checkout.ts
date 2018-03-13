@@ -31,7 +31,7 @@ export class CheckoutPage {
 	billing_shipping_same: boolean = true
 	elements: Elements;
   	card: StripeElement;
-  	zones: any;
+  	shipping_zones: any;
   	stripe_selected: boolean = false
   	gateway_instructions: string = ''
 
