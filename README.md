@@ -38,14 +38,10 @@ In the app, go to providers/woo/woo.ts and change the Authorization header. This
 
 Included features:
 
+- WP-API v2 and WooCommerce REST API v2 integration
 - Product list
 - Single product pages
 - Add to cart
 - Cart modal
 - Basic multi-step checkout
-
-TODO:
-
-- Better UI for variable products
-- Payment functionality on checkout
-- General UI/UX improvements
+- Stripe payments
