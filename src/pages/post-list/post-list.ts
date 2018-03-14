@@ -29,7 +29,7 @@ export class PostListPage {
 		) {
 
 		// put your desired WP-API route here. URL params, CPTs, and custom routes all OK
-		this.route = 'http://appdev.local/wp-json/wp/v2/posts?categories=29'
+		this.route = 'http://appdev.local/wp-json/wp/v2/posts'
 	}
 
 	ionViewDidLoad() {

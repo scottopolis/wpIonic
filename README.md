@@ -14,7 +14,9 @@ Features:
 
 ## Demo
 
-https://github.com/scottopolis/wpIonic/blob/master/wpionic-demo.gif
+<p align="center">
+ <img width="400" src="https://github.com/scottopolis/wpIonic/blob/master/wpionic-demo.gif">
+</p>
 
 ## How to setup
 
