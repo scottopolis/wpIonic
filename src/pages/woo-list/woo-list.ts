@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ToastController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController, ModalController, Events } from 'ionic-angular';
 import { WooProvider } from '../../providers/woo/woo';
 
 /**
@@ -28,11 +28,16 @@ export class WooListPage {
 		public wooProvider: WooProvider,
 		public loadingCtrl: LoadingController,
 		public toastCtrl: ToastController,
-		public modalCtrl: ModalController
+		public modalCtrl: ModalController,
+		public events: Events
 		) {
 
 		// put your desired WP-API route here. URL params, CPTs, and custom routes all OK
 		this.route = 'wp-json/wc/v2/products'
+
+		events.subscribe('add_to_cart', data => {
+	      this.cart_count++
+	    });
 	}
 
 	ionViewDidLoad() {

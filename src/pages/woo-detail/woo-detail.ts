@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ModalController, Events } from 'ionic-angular';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Storage } from '@ionic/storage';
 import { WooProvider } from '../../providers/woo/woo';
@@ -15,6 +15,7 @@ export class WooDetailPage {
 	description: any;
 	cartModal: any;
 	variations: any;
+	cart_count: number;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -23,10 +24,15 @@ export class WooDetailPage {
 		public storage: Storage,
 		public toastCtrl: ToastController,
 		public modalCtrl: ModalController,
-		public wooProvider: WooProvider
+		public wooProvider: WooProvider,
+		public events: Events
 		) {
 
 		this.loadProduct()
+
+		this.wooProvider.getCartContents().then( cart => {
+			this.cart_count = ( cart ? (<any>cart).length : '' )
+		})
 
 	}
 
@@ -53,7 +59,8 @@ export class WooDetailPage {
 		item.price = this.selectedItem.price
 		item.quantity = ( item.quantity ? item.quantity : 1 )
 
-		console.log(item)
+		this.cart_count++
+		this.events.publish( 'add_to_cart', item )
 
 		this.storage.get( 'cart' ).then( data => {
 
@@ -62,8 +69,6 @@ export class WooDetailPage {
 			} else {
 				data = [item]
 			}
-
-			console.log(data)
 
 			this.storage.set( 'cart', data )
 
