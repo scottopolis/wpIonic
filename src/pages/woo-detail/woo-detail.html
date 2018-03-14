@@ -4,7 +4,7 @@
     <ion-title><span [innerHTML]="selectedItem.name"></span></ion-title>
 
     <ion-buttons end>
-		<button ion-button (click)="showCart()">
+		<button ion-button (click)="showCart()" [ngClass]="{ 'item-added' : itemAdded  }">
 			<ion-icon name="cart"></ion-icon>
 			<ion-badge color="dark" item-end>{{cart_count}}</ion-badge>
 		</button>

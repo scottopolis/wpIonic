@@ -16,6 +16,7 @@ export class WooDetailPage {
 	cartModal: any;
 	variations: any;
 	cart_count: number;
+	itemAdded: boolean = false;
 
 	constructor(
 		public navCtrl: NavController, 
@@ -59,22 +60,45 @@ export class WooDetailPage {
 		item.price = this.selectedItem.price
 		item.quantity = ( item.quantity ? item.quantity : 1 )
 
-		this.cart_count++
-		this.events.publish( 'add_to_cart', item )
-
 		this.storage.get( 'cart' ).then( data => {
 
 			if( data ) {
+
+				// if item is already in cart, just bump quantity
+				for( let product of data ) {
+					if( product.product_id === item.product_id ) {
+						product.quantity = parseInt( product.quantity ) + parseInt( item.quantity )
+						this.productAddSuccess( data, item )
+						return;
+					}
+				}
 				data.push(item)
 			} else {
 				data = [item]
 			}
 
-			this.storage.set( 'cart', data )
+			this.cart_count++
+			this.events.publish( 'add_to_cart', item )
 
-			this.presentToast( item.name + ' added to cart!')
+			this.productAddSuccess( data, item )
 
 		})
+
+		// flash cart icon
+		this.itemAdded = true
+		setTimeout( () => {
+			this.itemAdded = false
+		}, 1000 );
+
+	}
+
+	productAddSuccess( data, item ) {
+
+		console.log('success', data)
+
+		this.storage.set( 'cart', data )
+
+		this.presentToast( item.name + ' added to cart!')
 
 	}
 

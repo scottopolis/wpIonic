@@ -25,4 +25,18 @@ page-woo-detail {
 		margin-top: 15px;
 	}
 
+	.toolbar button, .toolbar .badge {
+		transition: background-color 500ms ease-out;
+		background-color: transparent;
+	}
+
+	button.item-added {
+		
+		background-color: rgba(247,247,187,.4);
+
+		.badge {
+			background-color: transparent !important
+		}
+	}
+
 }
