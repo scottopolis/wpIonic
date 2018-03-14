@@ -63,10 +63,12 @@ export class CheckoutPage {
 
 		})
 
+	}
+
+	ionViewDidLoad() {
+		this.loadStripe()
 		this.getGateways()
 		this.getShippingZones()
-		this.loadStripe()
-
 	}
 
 	getGateways() {

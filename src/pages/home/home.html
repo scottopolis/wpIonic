@@ -9,19 +9,78 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Membership/Login Example</h2>
-  <p>
-    This project shows an example of validating an app user that is registered on your WordPress site. This allows you to use WordPress as a simple and free user management back-end for your app.
-  </p>
-  <p>
-    Please login to access the members only content below.
-  </p>
-  <button ion-button (click)="openLoginModal()"><span *ngIf="!loggedin">Login</span><span *ngIf="loggedin">Logout</span></button>
-  <p>&nbsp;</p>
-  <div *ngIf="loggedin">
-    <h2>MEMBERS ONLY CONTENT</h2>
-    <p>Here's your super special bonus...</p>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/XtdQz6piFpI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-  </div>
+<ion-content>
+  
+  <ion-card>
+
+    <img src="assets/imgs/mac-iphone-500.jpg"/>
+
+    <ion-card-content>
+
+      <ion-card-title class="big-title">
+        WP Ionic
+      </ion-card-title>
+
+      <p>This app is an example of integrating WordPress with an Ionic mobile app using the WP-API. To learn how to configure this app, please visit <a href="http://scottbolinger.com/ionic-wordpress-app/" target="_blank">scottbolinger.com</a></p>
+
+      <p><strong>Features:</strong></p>
+
+      <ul>
+        <li>Posts, including CPTs, taxonomies, and more</li>
+        <li>Pages and custom API endpoints</li>
+        <li>Login and hide/show membership content</li>
+        <li>WooCommerce REST API integration with Stripe payments</li>
+        <li>Tabs and/or side menu</li>
+      </ul>
+
+      <button ion-button block (click)="pushPage('PostListPage')">View Posts</button>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  
+  <ion-card>
+
+    <img src="assets/imgs/login.jpg"/>
+
+    <ion-card-content>
+
+      <ion-card-title class="big-title">
+        Login
+      </ion-card-title>
+
+      <p>You can hide content until a member is logged in. For example, a video will appear below after you login (use the side menu).</p>
+
+      <button ion-button block (click)="openLoginModal()"><span *ngIf="!loggedin">Login</span><span *ngIf="loggedin">Logout</span></button>
+
+      <div *ngIf="loggedin">
+        <p>&nbsp;</p>
+        <h2>MEMBERS ONLY CONTENT</h2>
+        <p>Here's your super special bonus...</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/XtdQz6piFpI?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+
+    <img src="assets/imgs/woo-placeholder.jpg"/>
+
+    <ion-card-content>
+
+      <ion-card-title class="big-title">
+        WooCommerce
+      </ion-card-title>
+
+      <p>This app can show your products, add to cart, and checkout with Stripe all using the WooCommerce REST API. (Some setup is required)</p>
+
+      <button ion-button block (click)="pushPage('WooListPage')">Visit Shop</button>
+
+    </ion-card-content>
+
+  </ion-card>
+  
 </ion-content>

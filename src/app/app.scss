@@ -16,7 +16,7 @@
 // automatically applied to the <body> element in the app.
 
 .toolbar-background {
-	background: #488aff;
+	background: #333;
 }
 
 .toolbar, .toolbar-title, .toolbar ion-icon {
@@ -28,4 +28,42 @@
 	ion-icon {
 		color: #333;
 	}
+}
+
+.item {
+	background-color: transparent
+}
+
+.big-title {
+	font-size: 2.2 rem;
+	color: #2d5292;
+	font-weight: bold
+}
+
+.card {
+	background: #fff;
+	img {
+		border-bottom: 1px solid #eee;
+	}
+	p {
+		margin-bottom: 10px;
+	}
+}
+
+.content {
+	background-color: #f5f1e9
+}
+
+.menu-inner .content {
+	background-color: #333;
+
+	.item {
+		color: #eee;
+		font-size: 1.8rem;
+
+		.item-inner {
+			border-bottom: 1px solid rgba(255,255,255,.3)
+		}
+	}
+	
 }

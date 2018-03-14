@@ -41,6 +41,12 @@ export class HomePage {
   	
   }
 
+  pushPage(page) {
+
+    this.navCtrl.push( page );
+    
+  }
+
   openLoginModal() {
 
     this.loginModal = this.modalCtrl.create( 'LoginModalPage' );
