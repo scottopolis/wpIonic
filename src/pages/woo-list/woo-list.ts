@@ -2,13 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController, ModalController, Events } from 'ionic-angular';
 import { WooProvider } from '../../providers/woo/woo';
 
-/**
- * Generated class for the PostListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-woo-list',
@@ -32,7 +25,6 @@ export class WooListPage {
 		public events: Events
 		) {
 
-		// put your desired WP-API route here. URL params, CPTs, and custom routes all OK
 		this.route = 'wp-json/wc/v2/products'
 
 		events.subscribe('add_to_cart', data => {

@@ -2,23 +2,23 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { Configure } from '../configure/configure';
 
-/*
-  Generated class for the WooProvider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class WooProvider {
 
   data: any = null;
-  url: string = 'https://appdev.local/';
+  url: string;
+  authString: string;
 
   constructor(
     public http: HttpClient,
-    public storage: Storage
-    ) {
+    public storage: Storage,
+    public configure: Configure ) {
+
+    this.url = configure.getUrl()
+    // add your auth keys in providers/configure
+    this.authString = this.configure.getAuth()
 
   }
 
@@ -41,8 +41,6 @@ export class WooProvider {
         concat = '?';
       }
 
-      console.log('page ' + page)
-
       let url = this.url + route;
 
       // set pagination
@@ -55,14 +53,10 @@ export class WooProvider {
         url = url + concat + 'page=1'
       }
 
-      console.log( 'url' + url)
-
-      // Basic auth requires base64 encoded string of 'Basic ' + btoa('key:secret')
-
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
-          'Authorization': 'Basic Y2tfZWUwMTBhOWQyOWYxN2Y5NjM4ZDViYjJhZWFhNDMyYzM4N2FmNTJiZTpjc18xMjM5MmYyYmVhMzlhYjZlYTM4NWExYWVmZWFjYzIyNDdkMTcxNjdm'
+          'Authorization': this.authString
         })
       };
 
@@ -92,12 +86,10 @@ export class WooProvider {
 
       let url = this.url + route
 
-      // Basic auth requires base64 encoded string of 'Basic ' + btoa('key:secret')
-
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type':  'application/json',
-          'Authorization': 'Basic Y2tfZWUwMTBhOWQyOWYxN2Y5NjM4ZDViYjJhZWFhNDMyYzM4N2FmNTJiZTpjc18xMjM5MmYyYmVhMzlhYjZlYTM4NWExYWVmZWFjYzIyNDdkMTcxNjdm'
+          'Authorization': this.authString
         })
       };
 

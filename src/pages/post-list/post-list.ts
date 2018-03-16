@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { PostsProvider } from '../../providers/posts/posts';
-
-/**
- * Generated class for the PostListPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Configure } from '../../providers/configure/configure';
 
 @IonicPage()
 @Component({
@@ -25,11 +19,14 @@ export class PostListPage {
 		public navParams: NavParams,
 		public postService: PostsProvider,
 		public loadingCtrl: LoadingController,
-		public toastCtrl: ToastController
+		public toastCtrl: ToastController,
+		public configure: Configure
 		) {
 
+		let url = configure.getUrl()
+
 		// put your desired WP-API route here. URL params, CPTs, and custom routes all OK
-		this.route = 'http://appdev.local/wp-json/wp/v2/posts'
+		this.route = url + 'wp-json/wp/v2/posts'
 	}
 
 	ionViewDidLoad() {

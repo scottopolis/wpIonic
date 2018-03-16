@@ -24,7 +24,9 @@ Blog post and tutorial here: http://scottbolinger.com/ionic-wordpress-app/
 
 - Install Ionic CLI tools https://ionicframework.com/docs/cli/
 - Clone this repository, and run npm install
-- Open pages/post-list/post-list.ts and providers/login/login.ts and change the urls
+- Open providers/configure/configure.ts and enter your WordPress site url
+- If using WooCommerce, enter your auth key in configure.ts as described
+- To use Stripe payments, add your publishable key in app.module.ts
 - Install the SB App Integration plugin https://github.com/scottopolis/sb-app-integration
 - run ionic serve to see it in your browser
 

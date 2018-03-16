@@ -3,24 +3,22 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { Configure } from '../configure/configure';
 
-/*
-  Generated class for the LoginProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class CameraProvider {
 
   data: any = null;
-  url: string = 'http://appdev.local/';
+  url: string;
 
   constructor(
   	public http: HttpClient,
   	private camera: Camera,
-  	private transfer: FileTransfer
-  	) {
+  	private transfer: FileTransfer,
+    public configure: Configure 
+    ) {
+
+    this.url = configure.getUrl()
 
   }
 

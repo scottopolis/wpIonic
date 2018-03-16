@@ -14,6 +14,7 @@ import { PostsProvider } from '../providers/posts/posts';
 import { WooProvider } from '../providers/woo/woo';
 
 import { NgxStripeModule } from 'ngx-stripe';
+import { Configure } from '../providers/configure/configure';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { NgxStripeModule } from 'ngx-stripe';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     HttpClientModule,
+    // replace key with your Stripe publishable key
     NgxStripeModule.forRoot('pk_test_07YFA0DDYu5miC2ijbhzWOXw')
   ],
   bootstrap: [IonicApp],
@@ -39,7 +41,8 @@ import { NgxStripeModule } from 'ngx-stripe';
     LoginProvider,
     CameraProvider,
     PostsProvider,
-    WooProvider
+    WooProvider,
+    Configure
   ]
 })
 export class AppModule {}
