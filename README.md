@@ -6,11 +6,13 @@ A demo mobile app that uses the Ionic Framework, and integrates with WordPress t
 
 Features:
 
-- Gets posts through WP-API
+- Gets posts through WP-API v2
+- WordPress login - needs SB App Integration plugin https://github.com/scottopolis/sb-app-integration
+- WooCommerce REST API v2 integration
+- Stripe payments
 - Pull to refresh
 - Infinite scroll
-- WordPress login - needs SB App Integration plugin https://github.com/scottopolis/sb-app-integration
-- More coming soon
+- Lots more
 
 ## Demo
 
