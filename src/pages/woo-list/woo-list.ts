@@ -30,6 +30,10 @@ export class WooListPage {
 		events.subscribe('add_to_cart', data => {
 	      this.cart_count++
 	    });
+
+	    events.subscribe('clear_cart', data => {
+	      this.cart_count = 0
+	    });
 	}
 
 	ionViewDidLoad() {

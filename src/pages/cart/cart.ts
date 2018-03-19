@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 @IonicPage()
@@ -16,7 +16,8 @@ export class CartPage {
 		public navCtrl: NavController, 
 		public navParams: NavParams,
 		public storage: Storage,
-		public viewCtrl: ViewController
+		public viewCtrl: ViewController,
+		public events: Events
 		) {
 
 
@@ -53,6 +54,8 @@ export class CartPage {
 		this.items = []
 
 		this.cart_total = 0
+
+		this.events.publish( 'clear_cart', 0 )
 
 	}
 

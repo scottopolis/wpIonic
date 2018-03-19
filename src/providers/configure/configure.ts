@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export class Configure {
 
 	// replace with your WordPress site URL. Must be HTTPS for production.
-	url: string = 'http://appdev.local/'
+	url: string = 'https://appdev.local/'
 
 	constructor(public http: HttpClient) {
 	}

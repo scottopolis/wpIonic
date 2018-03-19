@@ -34,6 +34,8 @@ export class CheckoutPage {
   	shipping_zones: any;
   	stripe_selected: boolean = false
   	gateway_instructions: string = ''
+  	cart_total: number;
+  	shipping_cost: number = 0;
 
 	@ViewChild('card') cardRef: ElementRef;
 	// optional parameters
@@ -60,6 +62,11 @@ export class CheckoutPage {
 			console.log('cart', data)
 
 			this.cart_contents = data
+
+			for (var i = 0; i < data.length; ++i) {
+				let total = parseInt( data[i].price ) * parseInt( data[i].quantity )
+				this.cart_total = ( this.cart_total ? this.cart_total : 0 ) + total
+			}
 
 		})
 
@@ -304,6 +311,16 @@ export class CheckoutPage {
 			this.presentToast( 'There was a problem connecting to the server.' );
 		})
 
+	}
+
+	shippingCost( e ) {
+		console.log(e)
+		if( e.indexOf('::') >= 0 ) {
+
+			let split = e.split("::")
+			this.shipping_cost = parseInt( split[2] )
+
+		}
 	}
 
 	dismiss() {

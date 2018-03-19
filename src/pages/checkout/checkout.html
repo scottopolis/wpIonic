@@ -76,6 +76,8 @@
 
 			<div ngModelGroup="shipping">
 
+			<ion-list>
+
 				<ion-item>
 				<ion-label stacked>First Name</ion-label>
 				<ion-input type="text" ngModel name="first_name" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
@@ -111,6 +113,8 @@
 				<ion-input type="number" ngModel name="postcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></ion-input>
 				</ion-item>
 
+			</ion-list>
+
 			</div>
 
 		</ion-slide>
@@ -134,7 +138,7 @@
 
 			<h2>Shipping Method</h2>
 
-				<ion-list radio-group ngModel name="method_id">
+				<ion-list radio-group ngModel name="method_id" (ionChange)="shippingCost($event)">
 
 					<ion-item *ngFor="let method of shipping_methods">
 					<ion-label>{{method.method_title}} ${{ method.settings.cost ? method.settings.cost.value : '0'}}</ion-label>
@@ -188,6 +192,14 @@
 
 				<p *ngIf="item.sale_price" class="product-price">Sale! ${{item.sale_price}}</p>
 
+				</ion-item>
+				
+				<ion-item *ngIf="shipping_cost > 0">
+					<p>Shipping: ${{shipping_cost}}</p>
+				</ion-item>
+
+				<ion-item>
+					<h2>Order total: ${{cart_total + shipping_cost}}</h2>
 				</ion-item>
 
 				<div padding>

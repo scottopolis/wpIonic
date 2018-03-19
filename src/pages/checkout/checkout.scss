@@ -22,4 +22,32 @@ page-checkout {
 		text-transform: none;
 	}
 
+	.list {
+		border: 1px solid #ccc;
+		background-color: #fff;
+
+		.item {
+			padding-left: 0;
+
+			.input-wrapper {
+				padding: 0 10px;
+			}
+		}
+
+		.item-checkbox {
+			padding-left: 15px;
+
+			.input-wrapper {
+				padding: 0;
+			}
+		}
+
+	}
+
+	#stripe-payment-form {
+	    background: #fff;
+	    padding: 5px 10px;
+	    border: 1px solid #ccc;
+	}
+
 }

@@ -35,6 +35,10 @@ export class WooDetailPage {
 			this.cart_count = ( cart ? (<any>cart).length : '' )
 		})
 
+		events.subscribe('clear_cart', data => {
+	      this.cart_count = 0
+	    });
+
 	}
 
 	loadProduct() {
