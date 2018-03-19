@@ -59,7 +59,7 @@ export class CheckoutPage {
 			if( !data )
 				this.presentToast( 'No cart items.' );
 
-			console.log('cart', data)
+			// console.log('cart', data)
 
 			this.cart_contents = data
 

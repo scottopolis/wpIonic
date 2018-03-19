@@ -38,7 +38,24 @@ This app uses basic authentication over SSL to pull products from the WooCommerc
 
 To use the WooCommerce module, you must create a REST API key in WooCommerce: http://woocommerce.github.io/woocommerce-rest-api-docs/#authentication
 
-In the app, go to providers/woo/woo.ts and change the Authorization header. This is a base64 encoded string of your consumer key and secret. You can generate these using btoa(key:secret), but keep in mind these are discoverable in your app files even in a signed native app package.
+In the app, go to providers/configure/configure.ts and change the Authorization header. This is a base64 encoded string of your consumer key and secret. You can generate these using btoa(key:secret), but keep in mind these are discoverable in your app files even in a signed native app package.
+
+<strong>Example getting your auth header</strong>
+
+consumer key: ck_7af7efdb4ef8708b5f8d5ccdacbd1d8e8ce0f8d5
+consumer secret: cs_8777f8b0de8435162162daf22f7e6944ab2bec40
+
+Visit <a href="https://www.base64encode.org/" target="_blank">an online base64 encoder</a> and enter your key and secret separated by a semi-colon:
+
+ck_7af7efdb4ef8708b5f8d5ccdacbd1d8e8ce0f8d5:cs_8777f8b0de8435162162daf22f7e6944ab2bec40
+
+Click encode. Copy the encoded string that looks like this:
+
+Y2tfN2FmN2VmZGI0ZWY4NzA4YjVmOGQ1Y2NkYWNiZDFkOGU4Y2UwZjhkNTpjc184Nzc3ZjhiMGRlODQzNTE2MjE2MmRhZjIyZjdlNjk0NGFiMmJlYzQw
+
+Visit providers/configure/configure.ts and change the return string in getAuth to:
+
+return 'Basic Y2tfN2FmN2VmZGI0ZWY4NzA4YjVmOGQ1Y2NkYWNiZDFkOGU4Y2UwZjhkNTpjc184Nzc3ZjhiMGRlODQzNTE2MjE2MmRhZjIyZjdlNjk0NGFiMmJlYzQw';
 
 Included features:
 

@@ -42,8 +42,6 @@ export class MyApp {
 
     this.menu.close();
 
-    let opt = {}
-
     this.nav.setRoot( item.slug );
 
   }
