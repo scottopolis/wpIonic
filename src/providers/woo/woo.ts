@@ -45,8 +45,8 @@ export class WooProvider {
 
       // set pagination
       if( page === 'nopaging' ) {
-        // don't add page
-        url = url
+        // get all results with no paging
+        url = url + concat + 'per_page=50'
       } else if( page ) {
         url = url + concat + 'page=' + page
       } else {
