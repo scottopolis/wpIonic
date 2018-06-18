@@ -20,7 +20,7 @@ export class PostsProvider {
 
     // set pagination
     if( !page ) {
-      let page = '1';
+      page = '1';
     }
 
     return new Promise( (resolve, reject) => {
