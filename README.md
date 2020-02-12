@@ -1,5 +1,7 @@
 # wpIonic
 
+## This project has not been maintained or updated in a while, it's probably best not to use it.
+
 *Completely rewritten and updated for Ionic 3.9.2 Feb 2018*
 
 A demo mobile app that uses the Ionic Framework, and integrates with WordPress through the WP-API.
